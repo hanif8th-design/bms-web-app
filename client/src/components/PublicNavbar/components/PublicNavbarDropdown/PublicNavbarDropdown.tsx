@@ -233,7 +233,11 @@ export function PublicNavbarDropdown({
   }
 
   const handleDropdownNavigation = () => {
-    closeDropdown()
+    // Mobile preserves the expanded state when navigation temporarily closes
+    // the side panel; desktop retains its conventional dismiss-on-selection.
+    if (presentation === 'desktop') {
+      closeDropdown()
+    }
     onNavigate?.()
   }
 
