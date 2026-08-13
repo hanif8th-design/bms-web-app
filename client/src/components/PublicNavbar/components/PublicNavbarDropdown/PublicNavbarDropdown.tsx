@@ -21,40 +21,16 @@ interface PublicNavbarDropdownProps {
   presentation: PublicNavbarPresentation
 }
 
-interface ExpandedMenuMeasurements {
-  height: number
-  marginBottom: number
-  marginTop: number
-  paddingBottom: number
-  paddingTop: number
-}
-
-function measureExpandedMenu(
-  menuElement: HTMLUListElement,
-): ExpandedMenuMeasurements {
-  const computedStyles = window.getComputedStyle(menuElement)
-
-  return {
-    height: menuElement.scrollHeight,
-    marginBottom: Number.parseFloat(computedStyles.marginBottom) || 0,
-    marginTop: Number.parseFloat(computedStyles.marginTop) || 0,
-    paddingBottom: Number.parseFloat(computedStyles.paddingBottom) || 0,
-    paddingTop: Number.parseFloat(computedStyles.paddingTop) || 0,
-  }
-}
-
 export function PublicNavbarDropdown({
   item,
   onNavigate,
   presentation,
 }: PublicNavbarDropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [isMenuRendered, setIsMenuRendered] = useState(false)
   const dropdownId = useId()
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
+  const mobileAccordionRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLUListElement>(null)
-  const expandedMenuMeasurementsRef =
-    useRef<ExpandedMenuMeasurements | null>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const location = useLocation()
@@ -65,84 +41,52 @@ export function PublicNavbarDropdown({
 
   useGSAP(
     () => {
+      const accordionElement = mobileAccordionRef.current
       const menuElement = menuRef.current
       const prefersReducedMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches
 
-      if (presentation !== 'mobile' || !menuElement) {
+      if (
+        presentation !== 'mobile' ||
+        !accordionElement ||
+        !menuElement
+      ) {
         return
       }
+
+      const computedMenuStyles = window.getComputedStyle(menuElement)
+      const expandedHeight =
+        menuElement.offsetHeight +
+        (Number.parseFloat(computedMenuStyles.marginTop) || 0) +
+        (Number.parseFloat(computedMenuStyles.marginBottom) || 0)
 
       if (prefersReducedMotion) {
-        if (!isOpen) {
-          setIsMenuRendered(false)
-        }
-        return
-      }
-
-      gsap.killTweensOf(menuElement)
-
-      if (isOpen) {
-        const isFreshMenu = menuElement.style.height === ''
-
-        if (isFreshMenu || !expandedMenuMeasurementsRef.current) {
-          expandedMenuMeasurementsRef.current = measureExpandedMenu(menuElement)
-        }
-
-        const expandedMenuMeasurements = expandedMenuMeasurementsRef.current
-
-        // A fresh menu starts collapsed; an interrupted close resumes in place.
-        if (isFreshMenu) {
-          gsap.set(menuElement, {
-            autoAlpha: 0,
-            height: 0,
-            marginBottom: 0,
-            marginTop: 0,
-            overflow: 'hidden',
-            paddingBottom: 0,
-            paddingTop: 0,
-            y: -6,
-          })
-        }
-
-        gsap.set(menuElement, { pointerEvents: 'auto' })
-        gsap.to(menuElement, {
-          autoAlpha: 1,
-          clearProps:
-            'height,marginBottom,marginTop,opacity,overflow,paddingBottom,paddingTop,pointerEvents,transform,visibility,willChange',
-          duration: 0.32,
-          ease: 'power2.out',
-          height: expandedMenuMeasurements.height,
-          marginBottom: expandedMenuMeasurements.marginBottom,
-          marginTop: expandedMenuMeasurements.marginTop,
-          paddingBottom: expandedMenuMeasurements.paddingBottom,
-          paddingTop: expandedMenuMeasurements.paddingTop,
-          willChange: 'height,transform,opacity',
+        gsap.set(accordionElement, {
+          autoAlpha: isOpen ? 1 : 0,
+          height: isOpen ? expandedHeight : 0,
+          pointerEvents: isOpen ? 'auto' : 'none',
           y: 0,
         })
         return
       }
 
-      // Keep the accordion mounted until the exit animation fully completes.
-      gsap.to(menuElement, {
-        autoAlpha: 0,
-        duration: 0.26,
-        ease: 'power2.inOut',
-        height: 0,
-        marginBottom: 0,
-        marginTop: 0,
-        onComplete: () => setIsMenuRendered(false),
-        overflow: 'hidden',
-        paddingBottom: 0,
-        paddingTop: 0,
-        pointerEvents: 'none',
+      // A stable wrapper provides one reversible animation target for every click.
+      gsap.to(accordionElement, {
+        autoAlpha: isOpen ? 1 : 0,
+        duration: isOpen ? 0.34 : 0.28,
+        ease: isOpen ? 'power2.out' : 'power2.inOut',
+        height: isOpen ? expandedHeight : 0,
+        onComplete: () =>
+          gsap.set(accordionElement, { clearProps: 'willChange' }),
+        overwrite: 'auto',
+        pointerEvents: isOpen ? 'auto' : 'none',
         willChange: 'height,transform,opacity',
-        y: -6,
+        y: isOpen ? 0 : -6,
       })
     },
     {
-      dependencies: [isMenuRendered, isOpen, presentation],
+      dependencies: [isOpen, presentation],
       scope: dropdownContainerRef,
     },
   )
@@ -151,23 +95,14 @@ export function PublicNavbarDropdown({
     (restoreTriggerFocus = false) => {
       setIsOpen(false)
 
-      const shouldAnimateClose =
-        presentation === 'mobile' &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-      if (!shouldAnimateClose) {
-        setIsMenuRendered(false)
-      }
-
       if (restoreTriggerFocus) {
         triggerRef.current?.focus()
       }
     },
-    [presentation],
+    [],
   )
 
   const openDropdown = () => {
-    setIsMenuRendered(true)
     setIsOpen(true)
   }
 
@@ -271,6 +206,37 @@ export function PublicNavbarDropdown({
     onNavigate?.()
   }
 
+  const dropdownMenu = (
+    <ul
+      aria-hidden={presentation === 'mobile' && !isOpen}
+      aria-label={`${item.label} navigation`}
+      className={styles.menu}
+      id={dropdownId}
+      onKeyDown={handleMenuKeyDown}
+      ref={menuRef}
+      role="menu"
+    >
+      {item.children.map((childItem, index) => (
+        <li key={childItem.to} role="none">
+          <NavLink
+            className={({ isActive }) =>
+              `${styles.menuLink} ${isActive ? styles.activeMenuLink : ''}`
+            }
+            onClick={handleDropdownNavigation}
+            ref={(element) => {
+              itemRefs.current[index] = element
+            }}
+            role="menuitem"
+            tabIndex={isOpen ? undefined : -1}
+            to={childItem.to}
+          >
+            {childItem.label}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  )
+
   return (
     <div
       className={`${styles.dropdown} ${styles[presentation]}`}
@@ -295,35 +261,12 @@ export function PublicNavbarDropdown({
         />
       </button>
 
-      {isMenuRendered ? (
-        <ul
-          aria-hidden={!isOpen}
-          aria-label={`${item.label} navigation`}
-          className={styles.menu}
-          id={dropdownId}
-          onKeyDown={handleMenuKeyDown}
-          ref={menuRef}
-          role="menu"
-        >
-          {item.children.map((childItem, index) => (
-            <li key={childItem.to} role="none">
-              <NavLink
-                className={({ isActive }) =>
-                  `${styles.menuLink} ${isActive ? styles.activeMenuLink : ''}`
-                }
-                onClick={handleDropdownNavigation}
-                ref={(element) => {
-                  itemRefs.current[index] = element
-                }}
-                role="menuitem"
-                tabIndex={isOpen ? undefined : -1}
-                to={childItem.to}
-              >
-                {childItem.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+      {presentation === 'mobile' ? (
+        <div className={styles.mobileAccordion} ref={mobileAccordionRef}>
+          {dropdownMenu}
+        </div>
+      ) : isOpen ? (
+        dropdownMenu
       ) : null}
     </div>
   )
