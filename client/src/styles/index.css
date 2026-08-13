@@ -1,0 +1,17 @@
+/*
+ * Global stylesheet entry point
+ *
+ * This file contains only the ordered imports that assemble the application-wide
+ * styling foundation. Tokens, selectors, and component styles must be defined in
+ * their dedicated files rather than added here.
+ */
+
+/*
+ * Import order is intentional: load the font first, make tokens available before
+ * any declarations consume them, normalize browser defaults, then apply the base
+ * application styles. Keep this sequence stable to preserve the cascade.
+ */
+@import "./fonts.css";
+@import "./design-tokens.css";
+@import "./reset.css";
+@import "./globals.css";

@@ -1,0 +1,75 @@
+/*
+ * Safe browser normalization
+ *
+ * This file removes a small set of inconsistent browser defaults and provides
+ * resilient media and control behavior. Visual design, layout utilities, and
+ * component-specific resets do not belong here.
+ */
+
+/* ==========================================================================
+   Box Model and Document Defaults
+   ========================================================================== */
+
+/* Pseudo-elements share the same predictable sizing model as regular elements. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Preserve useful element defaults while removing the browser's page gutter. */
+body {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Media and Form Controls
+   ========================================================================== */
+
+/* Block media avoids baseline gaps; intrinsic sizing prevents viewport overflow. */
+img,
+picture,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+picture,
+video {
+  height: auto;
+}
+
+/* Controls inherit application typography instead of platform-specific fonts. */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: inherit;
+}
+
+/* ==========================================================================
+   Motion Accessibility
+   ========================================================================== */
+
+/*
+ * Near-zero durations preserve completion events while removing non-essential
+ * motion for people who request reduced animation in their operating system.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,0 +1,9 @@
+/*
+ * Application font loading
+ *
+ * This file loads only the Inter weights supported by the design system.
+ * Typography scales, layout rules, and component-specific font styles do not
+ * belong here.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");

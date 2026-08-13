@@ -1,0 +1,138 @@
+/*
+ * Application-wide base styles
+ *
+ * This file defines the document canvas, default typography, shared interaction
+ * states, and the single global page container. Component visuals, page-specific
+ * layouts, and broad utility-class systems do not belong here.
+ */
+
+/* ==========================================================================
+   Document Foundation
+   ========================================================================== */
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background-color: var(--color-surface);
+  /* Native controls follow the same system preference as the theme tokens. */
+  color-scheme: light dark;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-body);
+  line-height: var(--line-height-body-md);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* A viewport-height root lets application shells grow with short pages. */
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ==========================================================================
+   Base Typography
+   ========================================================================== */
+
+/* Headings use the same family and weight so hierarchy comes from the type scale. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-on-surface);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--font-size-display-lg);
+  letter-spacing: var(--letter-spacing-display);
+  line-height: var(--line-height-display-lg);
+}
+
+h2 {
+  font-size: var(--font-size-headline-lg);
+  letter-spacing: var(--letter-spacing-headline);
+  line-height: var(--line-height-headline-lg);
+}
+
+h3 {
+  font-size: var(--font-size-headline-md);
+  letter-spacing: var(--letter-spacing-headline);
+  line-height: var(--line-height-headline-md);
+}
+
+h4 {
+  font-size: var(--font-size-headline-sm);
+  letter-spacing: var(--letter-spacing-headline);
+  line-height: var(--line-height-headline-sm);
+}
+
+h5 {
+  font-size: var(--font-size-title-lg);
+  letter-spacing: var(--letter-spacing-title);
+  line-height: var(--line-height-title-lg);
+}
+
+h6 {
+  font-size: var(--font-size-title-md);
+  letter-spacing: var(--letter-spacing-title);
+  line-height: var(--line-height-title-md);
+}
+
+/* Links inherit surrounding text color so components control their own emphasis. */
+a {
+  color: inherit;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.15em;
+}
+
+/* Form controls follow local text color as well as the font inherited in reset.css. */
+button,
+input,
+select,
+textarea {
+  color: inherit;
+}
+
+/* ==========================================================================
+   Global Interaction States
+   ========================================================================== */
+
+/* Keyboard focus remains highly visible without adding rings to pointer clicks. */
+:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Selection colors use an approved pair with sufficient foreground contrast. */
+::selection {
+  background-color: var(--color-selection);
+  color: var(--color-on-selection);
+}
+
+/* ==========================================================================
+   Shared Layout
+   ========================================================================== */
+
+/* The one global container aligns page content to the responsive layout tokens. */
+.page-container {
+  width: 100%;
+  max-width: calc(
+    var(--layout-max-width) + (2 * var(--layout-page-margin))
+  );
+  margin-inline: auto;
+  padding-inline: var(--layout-page-margin);
+}

@@ -1,0 +1,286 @@
+/*
+ * Global design tokens
+ *
+ * These custom properties are the shared source of truth for color,
+ * typography, spacing, layout, shape, elevation, and motion. Component styles
+ * may consume these values, but selectors and component-specific decisions do
+ * not belong here.
+ */
+
+/* ==========================================================================
+   Color Tokens
+   ========================================================================== */
+
+:root {
+  /*
+   * Tokens live on :root so every stylesheet, including CSS Modules, can use
+   * them without importing this file again or creating local copies.
+   */
+
+  /* Neutral surfaces establish a quiet hierarchy behind application content. */
+  --color-surface: #f7f9fb;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f3f5;
+  --color-surface-container: #ebeef0;
+  --color-surface-container-high: #e5e8ea;
+  --color-surface-container-highest: #dfe3e5;
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #434654;
+  --color-on-surface-muted: #5f636d;
+
+  /* Primary colors identify important actions, active states, and focus. */
+  --color-primary: #003fb1;
+  --color-primary-hover: #003dab;
+  --color-primary-active: #00358f;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #d9e2ff;
+  --color-on-primary-container: #001847;
+
+  /* Secondary colors support lower-emphasis actions and selected regions. */
+  --color-secondary: #565e71;
+  --color-secondary-hover: #454d60;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #dae2f9;
+  --color-on-secondary-container: #131c2b;
+
+  /* Semantic colors communicate outcomes without relying on color alone. */
+  --color-success: #2e6b3f;
+  --color-on-success: #ffffff;
+  --color-success-container: #b5f2bd;
+  --color-on-success-container: #00210a;
+  --color-warning: #7a5900;
+  --color-on-warning: #ffffff;
+  --color-warning-container: #ffdf95;
+  --color-on-warning-container: #261a00;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #410002;
+  --color-info: #315da8;
+  --color-on-info: #ffffff;
+  --color-info-container: #d9e2ff;
+  --color-on-info-container: #001a42;
+
+  /* Outline roles keep borders and separators consistent across components. */
+  --color-outline: #74777f;
+  --color-outline-variant: #c4c6d0;
+  --color-divider: #dfe1e7;
+  --color-focus-ring: #003fb1;
+  --color-selection: #d9e2ff;
+  --color-on-selection: #001847;
+}
+
+/* ==========================================================================
+   Typography Tokens
+   ========================================================================== */
+
+:root {
+  /* The fallback stack keeps text usable while Inter is loading or unavailable. */
+  --font-family-primary: "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Semantic type sizes let components express hierarchy instead of raw pixels. */
+  --font-size-display-lg: 48px;
+  --font-size-display-md: 40px;
+  --font-size-display-sm: 36px;
+  --font-size-headline-lg: 32px;
+  --font-size-headline-md: 28px;
+  --font-size-headline-sm: 24px;
+  --font-size-title-lg: 22px;
+  --font-size-title-md: 16px;
+  --font-size-title-sm: 14px;
+  --font-size-body-lg: 18px;
+  --font-size-body-md: 16px;
+  --font-size-body-sm: 14px;
+  --font-size-label-lg: 14px;
+  --font-size-label-md: 12px;
+  --font-size-label-sm: 11px;
+
+  /* Only weights loaded in fonts.css are exposed to avoid synthetic weights. */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Role-based line heights preserve readable rhythm at every type scale. */
+  --line-height-display-lg: 1.15;
+  --line-height-display-md: 1.15;
+  --line-height-display-sm: 1.2;
+  --line-height-headline-lg: 1.25;
+  --line-height-headline-md: 1.3;
+  --line-height-headline-sm: 1.3;
+  --line-height-title-lg: 1.35;
+  --line-height-title-md: 1.4;
+  --line-height-title-sm: 1.4;
+  --line-height-body-lg: 1.5;
+  --line-height-body-md: 1.5;
+  --line-height-body-sm: 1.5;
+  --line-height-label-lg: 1.4;
+  --line-height-label-md: 1.4;
+  --line-height-label-sm: 1.4;
+
+  /* Tighter display tracking and open label tracking improve legibility by role. */
+  --letter-spacing-display: -0.02em;
+  --letter-spacing-headline: -0.01em;
+  --letter-spacing-title: 0;
+  --letter-spacing-body: 0;
+  --letter-spacing-label: 0.01em;
+}
+
+/* ==========================================================================
+   Shape and Border Tokens
+   ========================================================================== */
+
+:root {
+  /* A limited radius scale keeps controls and containers visually related. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shared stroke widths align borders and line icons throughout the interface. */
+  --border-width-default: 1px;
+  --icon-stroke-width: 2px;
+}
+
+/* ==========================================================================
+   Spacing and Layout
+   ========================================================================== */
+
+:root {
+  /* The spacing scale provides predictable density from inline gaps to sections. */
+  --spacing-0: 0;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+
+  /* Grid and page tokens keep feature layouts aligned to one content frame. */
+  --layout-max-width: 1200px;
+  --layout-grid-columns: 12;
+  --layout-grid-gutter: 24px;
+  --layout-page-margin-desktop: 32px;
+  --layout-page-margin-tablet: 24px;
+  --layout-page-margin-mobile: 16px;
+  --layout-page-margin: var(--layout-page-margin-desktop);
+}
+
+/* ==========================================================================
+   Elevation Tokens
+   ========================================================================== */
+
+:root {
+  /* Elevation is intentionally subtle so hierarchy does not compete with content. */
+  --shadow-low: 0 1px 2px rgb(25 28 30 / 8%);
+  --shadow-medium: 0 4px 12px rgb(25 28 30 / 12%);
+  --shadow-high: 0 12px 32px rgb(25 28 30 / 16%);
+}
+
+/* ==========================================================================
+   Motion Tokens
+   ========================================================================== */
+
+:root {
+  /* Shared timings make state changes feel related across the application. */
+  --transition-duration-fast: 150ms;
+  --transition-duration-standard: 250ms;
+  --transition-duration-slow: 400ms;
+  --transition-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --transition-easing-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+}
+
+/* ==========================================================================
+   Dark Theme Overrides
+   ========================================================================== */
+
+/*
+ * Semantic token names stay unchanged in dark mode, so components inherit the
+ * appropriate palette without theme-specific selectors or duplicated styles.
+ * The system preference is used until the application provides a theme control.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark surfaces use small tonal steps to preserve depth without harsh contrast. */
+    --color-surface: #111416;
+    --color-surface-container-lowest: #0c0f11;
+    --color-surface-container-low: #171a1c;
+    --color-surface-container: #1b1f21;
+    --color-surface-container-high: #222628;
+    --color-surface-container-highest: #2a2f31;
+    --color-on-surface: #e2e2e5;
+    --color-on-surface-variant: #c4c6d0;
+    --color-on-surface-muted: #a9abb4;
+
+    /* Brighter action colors maintain contrast and prominence on dark surfaces. */
+    --color-primary: #adc6ff;
+    --color-primary-hover: #c0d1ff;
+    --color-primary-active: #8fadff;
+    --color-on-primary: #002e73;
+    --color-primary-container: #003f9e;
+    --color-on-primary-container: #dae2ff;
+    --color-secondary: #bdc6dc;
+    --color-secondary-hover: #d0daf0;
+    --color-on-secondary: #273143;
+    --color-secondary-container: #3e4759;
+    --color-on-secondary-container: #dae2f9;
+
+    /* Status pairs remain distinguishable while avoiding excessive saturation. */
+    --color-success: #99d5a4;
+    --color-on-success: #003915;
+    --color-success-container: #165228;
+    --color-on-success-container: #b5f2bd;
+    --color-warning: #f7bf48;
+    --color-on-warning: #402d00;
+    --color-warning-container: #5d4300;
+    --color-on-warning-container: #ffdf95;
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+    --color-error-container: #93000a;
+    --color-on-error-container: #ffdad6;
+    --color-info: #adc6ff;
+    --color-on-info: #002e69;
+    --color-info-container: #164582;
+    --color-on-info-container: #d9e2ff;
+
+    /* Dark outlines are restrained, while focus and selection remain prominent. */
+    --color-outline: #8e9099;
+    --color-outline-variant: #44474f;
+    --color-divider: #33363d;
+    --color-focus-ring: #adc6ff;
+    --color-selection: #003f9e;
+    --color-on-selection: #dae2ff;
+
+    /* Stronger shadow opacity keeps elevated surfaces perceptible in dark mode. */
+    --shadow-low: 0 1px 2px rgb(0 0 0 / 24%);
+    --shadow-medium: 0 4px 12px rgb(0 0 0 / 32%);
+    --shadow-high: 0 12px 32px rgb(0 0 0 / 40%);
+  }
+}
+
+/* ==========================================================================
+   Responsive Token Overrides
+   ========================================================================== */
+
+/* Tablet margins retain useful space without making the content column narrow. */
+@media (width < 1024px) {
+  :root {
+    --layout-page-margin: var(--layout-page-margin-tablet);
+  }
+}
+
+/*
+ * Large display styles step down on smaller screens to protect line length and
+ * hierarchy, while the compact page margin preserves usable content width.
+ */
+@media (width < 768px) {
+  :root {
+    --font-size-display-lg: 32px;
+    --font-size-headline-lg: 24px;
+    --layout-page-margin: var(--layout-page-margin-mobile);
+  }
+}
