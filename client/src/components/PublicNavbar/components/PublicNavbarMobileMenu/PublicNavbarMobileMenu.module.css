@@ -1,0 +1,77 @@
+.backdrop {
+  position: fixed;
+  z-index: 90;
+  inset: 80px 0 0;
+  display: block;
+  width: 100%;
+  height: calc(100vh - 80px);
+  height: calc(100dvh - 80px);
+  padding: 0;
+  border: 0;
+  background-color: rgb(25 28 30 / 28%);
+  cursor: default;
+  animation: revealBackdrop var(--transition-duration-fast)
+    var(--transition-easing-standard);
+}
+
+.mobileMenu {
+  position: fixed;
+  z-index: 100;
+  top: 80px;
+  right: 0;
+  width: min(420px, 100%);
+  height: calc(100vh - 80px);
+  height: calc(100dvh - 80px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-left: var(--border-width-default) solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-high);
+  animation: revealMobileMenu var(--transition-duration-standard)
+    var(--transition-easing-standard);
+  overscroll-behavior: contain;
+}
+
+.mobileMenuContent {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--layout-page-margin) var(--spacing-xl);
+}
+
+@keyframes revealBackdrop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes revealMobileMenu {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (width >= 1180px) {
+  .backdrop,
+  .mobileMenu {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .mobileMenu {
+    animation: none;
+  }
+}

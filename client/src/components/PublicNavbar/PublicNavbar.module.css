@@ -1,0 +1,28 @@
+.publicNavbar {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  border-bottom: var(--border-width-default) solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.navbarInner {
+  display: flex;
+  width: 100%;
+  max-width: calc(var(--layout-max-width) + (2 * var(--layout-page-margin)));
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  margin-inline: auto;
+  padding-inline: var(--layout-page-margin);
+}
+
+/* The complete desktop group switches as a unit before links can collide. */
+@media (width < 1180px) {
+  .navbarInner {
+    gap: var(--spacing-md);
+  }
+}

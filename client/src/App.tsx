@@ -1,10 +1,7 @@
-import './App.css'
+import { PublicNavbar } from './components/PublicNavbar/PublicNavbar'
 
 function App() {
-
-  return (
-    <h1>Welcome to Vite!</h1>
-  )
+  return <PublicNavbar />
 }
 
 export default App

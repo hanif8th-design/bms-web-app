@@ -1,0 +1,34 @@
+.navigation {
+  min-width: 0;
+}
+
+.navigationList {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navigationItem {
+  flex: 0 0 auto;
+}
+
+@media (width < 1180px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile,
+  .mobile .navigationList,
+  .mobile .navigationItem {
+    width: 100%;
+  }
+
+  .mobile .navigationList {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-xs);
+  }
+}

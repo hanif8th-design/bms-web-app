@@ -1,0 +1,141 @@
+.dropdown {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body-md);
+  transition:
+    color var(--transition-duration-fast) var(--transition-easing-standard),
+    background-color var(--transition-duration-fast)
+      var(--transition-easing-standard);
+}
+
+.trigger:hover,
+.openTrigger,
+.activeTrigger {
+  color: var(--color-primary);
+}
+
+.chevron {
+  flex: 0 0 auto;
+  transition: transform var(--transition-duration-fast)
+    var(--transition-easing-standard);
+}
+
+.openTrigger .chevron {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  z-index: 120;
+  top: calc(100% + var(--spacing-sm));
+  left: 0;
+  width: 280px;
+  margin: 0;
+  padding: var(--spacing-sm);
+  border: var(--border-width-default) solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-medium);
+  list-style: none;
+  transform-origin: top left;
+  animation: revealMenu var(--transition-duration-fast)
+    var(--transition-easing-standard);
+}
+
+.menuLink {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  padding-inline: var(--spacing-md);
+  border-radius: var(--radius-md);
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body-md);
+  text-decoration: none;
+  transition:
+    color var(--transition-duration-fast) var(--transition-easing-standard),
+    background-color var(--transition-duration-fast)
+      var(--transition-easing-standard);
+}
+
+.menuLink:hover,
+.menuLink:focus-visible {
+  background-color: var(--color-surface-container-low);
+  color: var(--color-primary);
+}
+
+.activeMenuLink {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  font-weight: var(--font-weight-medium);
+}
+
+@keyframes revealMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (width < 1180px) {
+  .mobile .trigger {
+    width: 100%;
+    min-height: 48px;
+    justify-content: space-between;
+    padding-inline: var(--spacing-md);
+  }
+
+  .mobile .trigger:hover {
+    background-color: var(--color-surface-container-low);
+  }
+
+  .mobile .activeTrigger {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+  }
+
+  .mobile .menu {
+    position: static;
+    width: 100%;
+    margin-block: var(--spacing-xs) var(--spacing-sm);
+    padding-block: var(--spacing-xs);
+    padding-inline: var(--spacing-md) 0;
+    border: 0;
+    border-left: var(--border-width-default) solid var(--color-outline-variant);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .mobile .menuLink {
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu {
+    animation: none;
+  }
+}

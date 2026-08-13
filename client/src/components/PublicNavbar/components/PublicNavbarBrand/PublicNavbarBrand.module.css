@@ -1,0 +1,19 @@
+.brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.logo {
+  display: block;
+  width: 133px;
+  height: auto;
+}
+
+@media (width < 480px) {
+  .logo {
+    width: 116px;
+  }
+}
