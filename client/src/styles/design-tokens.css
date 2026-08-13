@@ -201,10 +201,12 @@
 /*
  * Semantic token names stay unchanged in dark mode, so components inherit the
  * appropriate palette without theme-specific selectors or duplicated styles.
- * The system preference is used until the application provides a theme control.
+ * Dark mode remains available for a future theme control but is no longer
+ * selected automatically from the operating-system preference.
  */
-@media (prefers-color-scheme: dark) {
-  :root {
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
     /* Dark surfaces use small tonal steps to preserve depth without harsh contrast. */
     --color-surface: #111416;
     --color-surface-container-lowest: #0c0f11;
@@ -259,7 +261,6 @@
     --shadow-low: 0 1px 2px rgb(0 0 0 / 24%);
     --shadow-medium: 0 4px 12px rgb(0 0 0 / 32%);
     --shadow-high: 0 12px 32px rgb(0 0 0 / 40%);
-  }
 }
 
 /* ==========================================================================

@@ -14,8 +14,8 @@ html {
   min-width: 320px;
   min-height: 100%;
   background-color: var(--color-surface);
-  /* Native controls follow the same system preference as the theme tokens. */
-  color-scheme: light dark;
+  /* Light is the current product theme, including browser-native controls. */
+  color-scheme: light;
   text-size-adjust: 100%;
 }
 
