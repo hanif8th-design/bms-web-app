@@ -16,17 +16,22 @@ import type {
 import styles from './PublicNavbarDropdown.module.css'
 
 interface PublicNavbarDropdownProps {
+  controlledIsOpen?: boolean
   item: PublicNavbarDropdownItem
   onNavigate?: () => void
+  onOpenChange?: (isOpen: boolean) => void
   presentation: PublicNavbarPresentation
 }
 
 export function PublicNavbarDropdown({
+  controlledIsOpen,
   item,
   onNavigate,
+  onOpenChange,
   presentation,
 }: PublicNavbarDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false)
+  const isOpen = controlledIsOpen ?? uncontrolledIsOpen
   const dropdownId = useId()
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
   const mobileAccordionRef = useRef<HTMLDivElement>(null)
@@ -38,6 +43,16 @@ export function PublicNavbarDropdown({
     presentation === 'desktop'
       ? location.pathname.startsWith(item.to)
       : location.pathname === item.to
+
+  const setDropdownOpen = useCallback(
+    (nextIsOpen: boolean) => {
+      if (controlledIsOpen === undefined) {
+        setUncontrolledIsOpen(nextIsOpen)
+      }
+      onOpenChange?.(nextIsOpen)
+    },
+    [controlledIsOpen, onOpenChange],
+  )
 
   useGSAP(
     () => {
@@ -93,17 +108,17 @@ export function PublicNavbarDropdown({
 
   const closeDropdown = useCallback(
     (restoreTriggerFocus = false) => {
-      setIsOpen(false)
+      setDropdownOpen(false)
 
       if (restoreTriggerFocus) {
         triggerRef.current?.focus()
       }
     },
-    [],
+    [setDropdownOpen],
   )
 
   const openDropdown = () => {
-    setIsOpen(true)
+    setDropdownOpen(true)
   }
 
   const toggleDropdown = () => {
@@ -122,17 +137,26 @@ export function PublicNavbarDropdown({
 
     const closeOnOutsidePointer = (event: PointerEvent) => {
       if (!dropdownContainerRef.current?.contains(event.target as Node)) {
+        const pointerTarget = event.target
+        const pointerIsInsideMobileMenu =
+          pointerTarget instanceof Element &&
+          pointerTarget.closest('[data-public-navbar-mobile-menu]')
+
+        // Closing the side panel itself must not alter its remembered accordion state.
+        if (presentation === 'mobile' && !pointerIsInsideMobileMenu) {
+          return
+        }
         closeDropdown()
       }
     }
 
     document.addEventListener('pointerdown', closeOnOutsidePointer)
     return () => document.removeEventListener('pointerdown', closeOnOutsidePointer)
-  }, [closeDropdown, isOpen])
+  }, [closeDropdown, isOpen, presentation])
 
   // Escape consistently closes the menu and returns focus to its trigger.
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || presentation === 'mobile') {
       return
     }
 
@@ -145,7 +169,7 @@ export function PublicNavbarDropdown({
 
     document.addEventListener('keydown', closeOnEscape)
     return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [closeDropdown, isOpen])
+  }, [closeDropdown, isOpen, presentation])
 
   const focusDropdownItem = (index: number) => {
     const normalizedIndex =
@@ -197,6 +221,13 @@ export function PublicNavbarDropdown({
 
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      const focusIsInsideMobileMenu =
+        event.relatedTarget instanceof Element &&
+        event.relatedTarget.closest('[data-public-navbar-mobile-menu]')
+
+      if (presentation === 'mobile' && !focusIsInsideMobileMenu) {
+        return
+      }
       closeDropdown()
     }
   }

@@ -32,3 +32,9 @@
     gap: var(--spacing-xs);
   }
 }
+
+@media (width < 768px) {
+  .mobile .navigationList {
+    gap: var(--spacing-0);
+  }
+}

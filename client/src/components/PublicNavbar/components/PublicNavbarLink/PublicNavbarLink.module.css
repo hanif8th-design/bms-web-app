@@ -42,3 +42,10 @@
     color: var(--color-on-primary-container);
   }
 }
+
+@media (width < 768px) {
+  .navigationLink {
+    min-height: 44px;
+    font-size: var(--font-size-body-sm);
+  }
+}

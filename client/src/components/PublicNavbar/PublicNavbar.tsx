@@ -11,6 +11,7 @@ const mobileMenuId = 'public-navbar-mobile-menu'
 
 /** Assembles the public website's brand, navigation, and account actions. */
 export function PublicNavbar() {
+  const [isMobileFeaturesOpen, setIsMobileFeaturesOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const navbarRef = useRef<HTMLElement>(null)
   const menuToggleRef = useRef<HTMLButtonElement>(null)
@@ -61,13 +62,17 @@ export function PublicNavbar() {
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault()
+        if (isMobileFeaturesOpen) {
+          setIsMobileFeaturesOpen(false)
+          return
+        }
         closeMobileMenu(true)
       }
     }
 
     document.addEventListener('keydown', closeOnEscape)
     return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [isMobileMenuOpen])
+  }, [isMobileFeaturesOpen, isMobileMenuOpen])
 
   return (
     <header className={styles.publicNavbar} ref={navbarRef}>
@@ -84,8 +89,10 @@ export function PublicNavbar() {
       </div>
       <PublicNavbarMobileMenu
         id={mobileMenuId}
+        isFeaturesOpen={isMobileFeaturesOpen}
         isOpen={isMobileMenuOpen}
         onBackdropClick={() => closeMobileMenu(true)}
+        onFeaturesOpenChange={setIsMobileFeaturesOpen}
         onNavigate={() => closeMobileMenu(true)}
       />
     </header>

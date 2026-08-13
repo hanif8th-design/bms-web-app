@@ -18,9 +18,9 @@ export function PublicNavbarBrand({ onNavigate }: PublicNavbarBrandProps) {
       <img
         alt="BMS"
         className={styles.logo}
-        height={40}
+        height={34}
         src={bmsLogo}
-        width={133}
+        width={112}
       />
     </Link>
   )

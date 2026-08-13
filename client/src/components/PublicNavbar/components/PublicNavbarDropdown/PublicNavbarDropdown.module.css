@@ -144,6 +144,18 @@
   }
 }
 
+@media (width < 768px) {
+  .mobile .trigger,
+  .mobile .menuLink {
+    min-height: 44px;
+    font-size: var(--font-size-body-sm);
+  }
+
+  .mobile .menu {
+    padding-left: var(--spacing-sm);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .menu {
     animation: none;

@@ -1,6 +1,7 @@
 .brand {
   display: inline-flex;
   flex: 0 0 auto;
+  min-height: 44px;
   align-items: center;
   border-radius: var(--radius-sm);
   text-decoration: none;
@@ -8,12 +9,18 @@
 
 .logo {
   display: block;
-  width: 133px;
+  width: 112px;
   height: auto;
 }
 
-@media (width < 480px) {
+@media (width < 768px) {
   .logo {
-    width: 116px;
+    width: 92px;
+  }
+}
+
+@media (width < 380px) {
+  .logo {
+    width: 84px;
   }
 }

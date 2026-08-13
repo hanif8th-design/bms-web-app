@@ -83,3 +83,19 @@
     min-height: 48px;
   }
 }
+
+@media (width < 768px) {
+  .mobile {
+    padding-top: var(--spacing-md);
+  }
+
+  .mobile .action {
+    min-height: 44px;
+    font-size: var(--font-size-body-sm);
+  }
+
+  .mobile .actionIcon {
+    width: 18px;
+    height: 18px;
+  }
+}

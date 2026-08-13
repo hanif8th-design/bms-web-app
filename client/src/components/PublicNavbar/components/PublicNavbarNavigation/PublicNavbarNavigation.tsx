@@ -5,12 +5,16 @@ import { PublicNavbarLink } from '../PublicNavbarLink/PublicNavbarLink'
 import styles from './PublicNavbarNavigation.module.css'
 
 interface PublicNavbarNavigationProps {
+  isMobileFeaturesOpen?: boolean
   onNavigate?: () => void
+  onMobileFeaturesOpenChange?: (isOpen: boolean) => void
   presentation: PublicNavbarPresentation
 }
 
 export function PublicNavbarNavigation({
+  isMobileFeaturesOpen,
   onNavigate,
+  onMobileFeaturesOpenChange,
   presentation,
 }: PublicNavbarNavigationProps) {
   return (
@@ -24,8 +28,16 @@ export function PublicNavbarNavigation({
           <li className={styles.navigationItem} key={navigationItem.to}>
             {navigationItem.kind === 'dropdown' ? (
               <PublicNavbarDropdown
+                controlledIsOpen={
+                  presentation === 'mobile' ? isMobileFeaturesOpen : undefined
+                }
                 item={navigationItem}
                 onNavigate={onNavigate}
+                onOpenChange={
+                  presentation === 'mobile'
+                    ? onMobileFeaturesOpenChange
+                    : undefined
+                }
                 presentation={presentation}
               />
             ) : (
