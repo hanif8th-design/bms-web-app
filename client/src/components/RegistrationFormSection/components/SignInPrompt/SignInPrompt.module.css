@@ -1,0 +1,18 @@
+/* Keeps the secondary sign-in route quiet but discoverable. */
+.prompt {
+  margin: 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-body-sm);
+  text-align: center;
+}
+
+.prompt a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.prompt a:hover {
+  text-decoration: underline;
+}

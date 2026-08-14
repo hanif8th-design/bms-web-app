@@ -1,0 +1,10 @@
+/* Controls the compact vertical rhythm of the complete registration form. */
+.form {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.fields {
+  display: grid;
+  gap: var(--spacing-md);
+}

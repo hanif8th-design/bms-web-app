@@ -1,0 +1,36 @@
+/* Defines the neutral showcase pane and aligns its visual content. */
+.showcaseSection {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  background-color: var(--color-surface-container);
+}
+
+.showcaseContent {
+  display: grid;
+  width: 100%;
+  max-width: 450px;
+  gap: 42px;
+}
+
+@media (width < 1024px) {
+  .showcaseSection {
+    padding-inline: var(--spacing-lg);
+  }
+
+  .showcaseContent {
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (width < 800px) {
+  .showcaseSection {
+    padding: var(--spacing-2xl) var(--layout-page-margin);
+  }
+
+  .showcaseContent {
+    max-width: 560px;
+  }
+}

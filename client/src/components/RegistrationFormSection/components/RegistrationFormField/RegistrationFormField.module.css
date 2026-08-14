@@ -1,0 +1,67 @@
+/* Defines the shared visual and accessible states for text inputs. */
+.field {
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-on-surface);
+  font-size: var(--font-size-label-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-label-lg);
+}
+
+.inputShell {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--spacing-md);
+  border: var(--border-width-default) solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+  outline: none;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-size: var(--font-size-body-sm);
+  transition:
+    border-color var(--transition-duration-fast)
+      var(--transition-easing-standard),
+    box-shadow var(--transition-duration-fast)
+      var(--transition-easing-standard),
+    background-color var(--transition-duration-fast)
+      var(--transition-easing-standard);
+}
+
+.input::placeholder {
+  color: var(--color-on-surface-muted);
+  opacity: 0.62;
+}
+
+.input:hover {
+  border-color: var(--color-outline);
+}
+
+.input:focus-visible {
+  border-color: var(--color-focus-ring);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-container);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+
+.withAdornment {
+  padding-right: var(--spacing-2xl);
+}
+
+.error {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--color-error);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+}

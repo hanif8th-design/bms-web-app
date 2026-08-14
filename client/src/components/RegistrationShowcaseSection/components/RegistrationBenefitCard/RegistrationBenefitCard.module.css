@@ -1,0 +1,51 @@
+/* Matches the elevated white cards and restrained icon treatment in the reference. */
+.card {
+  min-width: 0;
+  min-height: 158px;
+  padding: var(--spacing-lg) 20px;
+  border: var(--border-width-default) solid var(--color-divider);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-low);
+}
+
+.iconContainer {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+  color: var(--color-primary);
+  place-items: center;
+}
+
+.card:nth-child(2) .iconContainer {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-title-md);
+}
+
+.description {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-body-sm);
+}
+
+@media (width >= 800px) and (width < 920px) {
+  .card {
+    min-height: 0;
+  }
+}
+
+@media (width < 540px) {
+  .card {
+    min-height: 0;
+  }
+}

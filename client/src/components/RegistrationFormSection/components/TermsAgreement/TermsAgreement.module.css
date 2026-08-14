@@ -1,0 +1,47 @@
+/* Aligns the native checkbox and policy copy while preserving easy interaction. */
+.agreementField {
+  min-width: 0;
+}
+
+.agreementRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  margin: 2px 0 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.checkbox[aria-invalid='true'] {
+  outline: var(--border-width-default) solid var(--color-error);
+  outline-offset: 1px;
+}
+
+.label {
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-body-sm);
+}
+
+.label a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.label a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  margin: var(--spacing-xs) 0 0 25px;
+  color: var(--color-error);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+}

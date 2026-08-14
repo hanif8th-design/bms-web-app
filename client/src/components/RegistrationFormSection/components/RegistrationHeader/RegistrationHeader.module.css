@@ -1,0 +1,24 @@
+/* Matches the compact title treatment at the top of the reference form. */
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-display-md);
+  line-height: var(--line-height-display-md);
+}
+
+.description {
+  margin: var(--spacing-sm) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+}
+
+@media (width < 768px) {
+  .title {
+    font-size: var(--font-size-display-lg);
+    line-height: var(--line-height-display-lg);
+  }
+}
