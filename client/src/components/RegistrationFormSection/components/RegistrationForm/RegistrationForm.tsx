@@ -13,7 +13,8 @@ import type {
 import styles from './RegistrationForm.module.css'
 
 const initialValues: RegistrationFormValues = {
-  fullName: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -27,10 +28,16 @@ function validateRegistrationForm(
 ): RegistrationFormErrors {
   const errors: RegistrationFormErrors = {}
 
-  if (!values.fullName.trim()) {
-    errors.fullName = 'Enter your full name.'
-  } else if (values.fullName.trim().length < 2) {
-    errors.fullName = 'Full name must be at least 2 characters.'
+  if (!values.firstName.trim()) {
+    errors.firstName = 'Enter your first name.'
+  } else if (values.firstName.trim().length < 2) {
+    errors.firstName = 'First name must be at least 2 characters.'
+  }
+
+  if (!values.lastName.trim()) {
+    errors.lastName = 'Enter your last name.'
+  } else if (values.lastName.trim().length < 2) {
+    errors.lastName = 'Last name must be at least 2 characters.'
   }
 
   if (!values.email.trim()) {
@@ -109,17 +116,30 @@ export function RegistrationForm() {
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit}>
       <div className={styles.fields}>
-        <RegistrationFormField
-          autoComplete="name"
-          error={visibleError('fullName')}
-          id="full-name"
-          label="Full Name"
-          name="fullName"
-          onBlur={() => markFieldTouched('fullName')}
-          onChange={(event) => updateValue('fullName', event.target.value)}
-          placeholder="John Doe"
-          value={values.fullName}
-        />
+        <div className={styles.nameFields}>
+          <RegistrationFormField
+            autoComplete="given-name"
+            error={visibleError('firstName')}
+            id="first-name"
+            label="First Name"
+            name="firstName"
+            onBlur={() => markFieldTouched('firstName')}
+            onChange={(event) => updateValue('firstName', event.target.value)}
+            placeholder="John"
+            value={values.firstName}
+          />
+          <RegistrationFormField
+            autoComplete="family-name"
+            error={visibleError('lastName')}
+            id="last-name"
+            label="Last Name"
+            name="lastName"
+            onBlur={() => markFieldTouched('lastName')}
+            onChange={(event) => updateValue('lastName', event.target.value)}
+            placeholder="Doe"
+            value={values.lastName}
+          />
+        </div>
         <RegistrationFormField
           autoComplete="email"
           error={visibleError('email')}

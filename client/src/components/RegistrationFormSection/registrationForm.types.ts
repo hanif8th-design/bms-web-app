@@ -1,6 +1,7 @@
 // Defines the typed state and validation contract shared by registration controls.
 export interface RegistrationFormValues {
-  fullName: string
+  firstName: string
+  lastName: string
   email: string
   password: string
   confirmPassword: string
