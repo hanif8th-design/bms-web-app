@@ -1,0 +1,47 @@
+.arrow {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  color: var(--color-primary-container);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.left {
+  top: 2%;
+  left: 15%;
+}
+
+.right {
+  right: 14%;
+  bottom: 0;
+}
+
+.icon {
+  width: clamp(72px, 7vw, 112px);
+  height: auto;
+}
+
+@media (width < 1180px) {
+  .arrow {
+    z-index: 0;
+    opacity: 0.24;
+  }
+
+  .left {
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+  }
+
+  .right {
+    right: var(--spacing-lg);
+    bottom: var(--spacing-xl);
+  }
+}
+
+/* Arrows disappear on mobile so no decoration can cover the interaction column. */
+@media (width < 768px) {
+  .arrow {
+    display: none;
+  }
+}

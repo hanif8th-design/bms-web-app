@@ -1,0 +1,41 @@
+.page {
+  --not-found-navbar-height: 80px;
+
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+
+/* Flex growth accounts for the sticky navbar without duplicating its height. */
+.main {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Tablet and mobile return to document flow so content can scroll when needed. */
+@media (width < 1180px) {
+  .page {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .main {
+    min-height: calc(100dvh - var(--not-found-navbar-height));
+    overflow: visible;
+  }
+}
+
+@media (width < 768px) {
+  .page {
+    --not-found-navbar-height: 64px;
+  }
+}

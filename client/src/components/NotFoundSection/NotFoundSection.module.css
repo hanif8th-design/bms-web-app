@@ -1,0 +1,93 @@
+.section {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  align-items: center;
+  overflow: clip;
+  padding-block: clamp(var(--spacing-sm), 3vh, var(--spacing-xl));
+  background-color: var(--color-primary);
+}
+
+/* The outer columns stretch the two geometric 4s toward the viewport edges. */
+.composition {
+  --not-found-piece-height: min(
+    calc(
+      100dvh - var(--not-found-navbar-height) - var(--spacing-xl)
+    ),
+    610px
+  );
+
+  position: relative;
+  display: grid;
+  width: calc(100% - (2 * var(--layout-page-margin)));
+  height: 100%;
+  min-height: 0;
+  max-width: 1368px;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(3, minmax(0, 440px));
+  gap: clamp(var(--spacing-sm), 1.25vw, var(--spacing-lg));
+  margin-inline: auto;
+}
+
+.numberPosition {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: var(--not-found-piece-height);
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftNumber {
+  justify-content: flex-end;
+}
+
+.rightNumber {
+  justify-content: flex-start;
+}
+
+/* Tablet and mobile make the panel the sole error signal, so the 4s are removed. */
+@media (width < 1180px) {
+  .section {
+    height: auto;
+    min-height: calc(100dvh - var(--not-found-navbar-height));
+    overflow: visible;
+  }
+
+  .composition {
+    display: flex;
+    height: auto;
+    min-height: var(--not-found-piece-height);
+    max-width: 640px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .numberPosition {
+    display: none;
+  }
+}
+
+/* Mobile keeps the primary message in one uncluttered full-width column. */
+@media (width < 768px) {
+  .section {
+    align-items: center;
+    padding-block: var(--spacing-md);
+  }
+
+}
+
+/* Short screens trade ambient space for content density instead of scrolling. */
+@media (height < 720px) {
+  .section {
+    padding-block: var(--spacing-sm);
+  }
+}
