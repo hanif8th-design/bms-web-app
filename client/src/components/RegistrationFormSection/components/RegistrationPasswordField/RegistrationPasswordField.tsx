@@ -1,11 +1,17 @@
 // Adds an accessible visibility toggle and optional strength feedback to a password input.
-import { useState, type ChangeEventHandler, type FocusEventHandler } from 'react'
+import {
+  useState,
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  type HTMLInputAutoCompleteAttribute,
+} from 'react'
 import { RiEyeLine, RiEyeOffLine } from '@remixicon/react'
 import { PasswordStrengthIndicator } from '../PasswordStrengthIndicator/PasswordStrengthIndicator'
 import { RegistrationFormField } from '../RegistrationFormField/RegistrationFormField'
 import styles from './RegistrationPasswordField.module.css'
 
 interface RegistrationPasswordFieldProps {
+  autoComplete?: HTMLInputAutoCompleteAttribute
   error?: string
   id: string
   label: string
@@ -18,6 +24,7 @@ interface RegistrationPasswordFieldProps {
 }
 
 export function RegistrationPasswordField({
+  autoComplete = 'new-password',
   error,
   id,
   label,
@@ -46,7 +53,7 @@ export function RegistrationPasswordField({
 
   return (
     <RegistrationFormField
-      autoComplete="new-password"
+      autoComplete={autoComplete}
       belowInput={
         showStrength ? (
           <PasswordStrengthIndicator id={strengthId} password={value} />

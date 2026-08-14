@@ -1,0 +1,52 @@
+/* Matches registration sizing while allowing only the form pane to scroll. */
+.formSection {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--spacing-lg) var(--layout-page-margin);
+  border-right: var(--border-width-default) solid var(--color-divider);
+  background-color: var(--color-surface-container-lowest);
+  scrollbar-color: var(--color-outline-variant) transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.formContent {
+  width: 100%;
+  max-width: 424px;
+  margin-block: auto;
+}
+
+@media (width < 1024px) {
+  .formSection {
+    padding-block: var(--spacing-lg);
+  }
+}
+
+@media (width < 880px) {
+  .formSection {
+    height: auto;
+    min-height: auto;
+    overflow-y: visible;
+    overscroll-behavior: auto;
+    padding-block: var(--spacing-3xl);
+    border-right: 0;
+    border-bottom: var(--border-width-default) solid var(--color-divider);
+    scrollbar-gutter: auto;
+  }
+
+  .formContent {
+    margin-block: 0;
+  }
+}
+
+@media (width < 480px) {
+  .formSection {
+    padding-block: var(--spacing-xl);
+  }
+}

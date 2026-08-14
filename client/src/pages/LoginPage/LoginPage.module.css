@@ -1,0 +1,25 @@
+/* Mirrors the fixed desktop auth split and natural mobile page flow. */
+.loginPage {
+  display: grid;
+  width: 100%;
+  max-width: 1600px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin-inline: auto;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-high);
+}
+
+@media (width < 880px) {
+  .loginPage {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    grid-template-columns: minmax(0, 1fr);
+    box-shadow: none;
+  }
+}

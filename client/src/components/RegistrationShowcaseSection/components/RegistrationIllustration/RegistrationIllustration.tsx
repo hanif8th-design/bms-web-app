@@ -6,7 +6,7 @@ export function RegistrationIllustration() {
   return (
     <div
       className={styles.illustration}
-      data-register-animation-illustration
+      data-auth-animation-illustration
       aria-hidden="true"
     >
       <div className={styles.logoSurface}>

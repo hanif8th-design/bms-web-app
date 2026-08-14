@@ -1,12 +1,12 @@
-// Coordinates the registration page's subtle, reduced-motion-safe entrance sequence.
+// Coordinates subtle, reduced-motion-safe entrances shared by authentication pages.
 import type { RefObject } from 'react'
 import { gsap, useGSAP } from '../lib/gsap'
 
-const formItemSelector = '[data-register-animation-item]'
-const illustrationSelector = '[data-register-animation-illustration]'
-const benefitSelector = '[data-register-animation-benefit]'
+const formItemSelector = '[data-auth-animation-item]'
+const illustrationSelector = '[data-auth-animation-illustration]'
+const benefitSelector = '[data-auth-animation-benefit]'
 
-export function useRegisterPageAnimation(
+export function useAuthPageAnimation(
   pageRef: RefObject<HTMLElement | null>,
 ) {
   useGSAP(
@@ -18,7 +18,7 @@ export function useRegisterPageAnimation(
 
       const motionPreference = gsap.matchMedia()
 
-      // Small transforms keep the entrance polished without delaying interaction.
+      // Small transforms keep page entry polished without delaying interaction.
       motionPreference.add(
         '(prefers-reduced-motion: no-preference)',
         () => {

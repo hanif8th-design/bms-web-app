@@ -1,18 +1,18 @@
-// Composes the two primary sections of the public account-registration page.
+// Composes the login form and shared authentication showcase at the /login route.
 import { useRef } from 'react'
-import { RegistrationFormSection } from '../../components/RegistrationFormSection/RegistrationFormSection'
+import { LoginFormSection } from '../../components/LoginFormSection/LoginFormSection'
 import { RegistrationShowcaseSection } from '../../components/RegistrationShowcaseSection/RegistrationShowcaseSection'
 import { useAuthPageAnimation } from '../../hooks/useAuthPageAnimation'
-import styles from './RegisterPage.module.css'
+import styles from './LoginPage.module.css'
 
-export function RegisterPage() {
+export function LoginPage() {
   const pageRef = useRef<HTMLElement>(null)
 
   useAuthPageAnimation(pageRef)
 
   return (
-    <main className={styles.registerPage} ref={pageRef}>
-      <RegistrationFormSection />
+    <main className={styles.loginPage} ref={pageRef}>
+      <LoginFormSection />
       <RegistrationShowcaseSection />
     </main>
   )

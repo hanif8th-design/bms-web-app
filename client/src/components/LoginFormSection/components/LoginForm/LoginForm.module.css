@@ -1,0 +1,37 @@
+/* Defines the compact login rhythm and password-recovery placement. */
+.form {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.fields {
+  display: grid;
+  gap: 20px;
+}
+
+.passwordField {
+  position: relative;
+  min-width: 0;
+}
+
+.forgotLink {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 12px;
+  display: inline-flex;
+  min-height: var(--spacing-md);
+  align-items: center;
+  padding-inline: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-primary);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-label-md);
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
