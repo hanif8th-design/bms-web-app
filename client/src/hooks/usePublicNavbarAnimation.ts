@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import { gsap, useGSAP } from '../../lib/gsap'
+import { gsap, useGSAP } from '../lib/gsap'
 
 const navbarAnimationItemSelector = '[data-navbar-animation-item]'
 

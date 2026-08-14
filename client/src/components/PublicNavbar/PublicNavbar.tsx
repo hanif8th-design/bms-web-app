@@ -5,7 +5,7 @@ import { PublicNavbarMenuToggle } from './components/PublicNavbarMenuToggle/Publ
 import { PublicNavbarMobileMenu } from './components/PublicNavbarMobileMenu/PublicNavbarMobileMenu'
 import { PublicNavbarNavigation } from './components/PublicNavbarNavigation/PublicNavbarNavigation'
 import styles from './PublicNavbar.module.css'
-import { usePublicNavbarAnimation } from './usePublicNavbarAnimation'
+import { usePublicNavbarAnimation } from '../../hooks/usePublicNavbarAnimation'
 
 const mobileMenuId = 'public-navbar-mobile-menu'
 
