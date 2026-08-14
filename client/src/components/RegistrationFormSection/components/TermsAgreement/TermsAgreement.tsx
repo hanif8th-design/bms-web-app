@@ -38,9 +38,7 @@ export function TermsAgreement({
           <Link to="/privacy">Privacy Policy</Link>.
         </label>
       </div>
-      {error ? (
-        <RegistrationFieldMessage id={errorId} message={error} />
-      ) : null}
+      <RegistrationFieldMessage id={errorId} message={error} />
     </div>
   )
 }

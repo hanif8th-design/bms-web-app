@@ -46,7 +46,7 @@ export function RegistrationFormField({
     .join(' ')
 
   return (
-    <div className={styles.field}>
+    <div className={`${styles.field} ${error ? styles.invalidField : ''}`}>
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>
@@ -67,9 +67,7 @@ export function RegistrationFormField({
         {endAdornment}
       </div>
       {belowInput}
-      {error ? (
-        <RegistrationFieldMessage id={errorId} message={error} />
-      ) : null}
+      <RegistrationFieldMessage id={errorId} message={error} />
     </div>
   )
 }

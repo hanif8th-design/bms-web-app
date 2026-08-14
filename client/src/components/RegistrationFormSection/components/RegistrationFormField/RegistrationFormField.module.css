@@ -1,15 +1,38 @@
 /* Defines the shared visual and accessible states for text inputs. */
 .field {
+  position: relative;
   min-width: 0;
+  padding-top: var(--spacing-sm);
 }
 
 .label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--color-on-surface);
-  font-size: var(--font-size-label-lg);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 12px;
+  display: inline-flex;
+  min-height: var(--spacing-md);
+  align-items: center;
+  margin: 0;
+  padding-inline: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-label-md);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-label-lg);
+  letter-spacing: var(--letter-spacing-label);
+  line-height: var(--line-height-label-md);
+  transition: color var(--transition-duration-fast)
+    var(--transition-easing-standard);
+}
+
+.field:focus-within .label {
+  color: var(--color-primary);
+}
+
+.invalidField .label,
+.invalidField:focus-within .label {
+  color: var(--color-error);
 }
 
 .inputShell {

@@ -1,4 +1,15 @@
 /* Uses a compact semantic callout so errors are noticeable without dominating the form. */
+.messageRegion {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 0fr;
+}
+
+.messageClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .message {
   display: flex;
   align-items: flex-start;
