@@ -3,7 +3,7 @@ import styles from './RegistrationHeader.module.css'
 
 export function RegistrationHeader() {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-register-animation-item>
       <h1 id="register-heading" className={styles.title}>
         Create Account
       </h1>

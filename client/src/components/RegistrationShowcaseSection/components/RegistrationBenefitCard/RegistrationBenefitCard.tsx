@@ -12,7 +12,7 @@ export function RegistrationBenefitCard({
   const BenefitIcon = benefit.icon
 
   return (
-    <li className={styles.card}>
+    <li className={styles.card} data-register-animation-benefit>
       <div className={styles.iconContainer} aria-hidden="true">
         <BenefitIcon size={20} />
       </div>

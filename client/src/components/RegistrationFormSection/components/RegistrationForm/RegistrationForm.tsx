@@ -123,6 +123,7 @@ export function RegistrationForm() {
   return (
     <form
       className={styles.form}
+      data-register-animation-item
       noValidate
       onSubmit={handleSubmit}
       ref={formRef}
