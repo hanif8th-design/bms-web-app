@@ -8,9 +8,6 @@ export function RegistrationIllustration() {
       <div className={styles.logoSurface}>
         <img className={styles.logo} src={bmsLogo} alt="" />
       </div>
-      <div className={styles.logoSurface}>
-        <img className={styles.logo} src={bmsLogo} alt="" />
-      </div>
     </div>
   )
 }

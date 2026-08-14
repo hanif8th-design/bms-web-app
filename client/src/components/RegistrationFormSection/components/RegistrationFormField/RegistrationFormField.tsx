@@ -6,6 +6,7 @@ import type {
   HTMLInputTypeAttribute,
   ReactNode,
 } from 'react'
+import { RegistrationFieldMessage } from '../RegistrationFieldMessage/RegistrationFieldMessage'
 import styles from './RegistrationFormField.module.css'
 
 interface RegistrationFormFieldProps {
@@ -67,9 +68,7 @@ export function RegistrationFormField({
       </div>
       {belowInput}
       {error ? (
-        <p className={styles.error} id={errorId} role="alert">
-          {error}
-        </p>
+        <RegistrationFieldMessage id={errorId} message={error} />
       ) : null}
     </div>
   )

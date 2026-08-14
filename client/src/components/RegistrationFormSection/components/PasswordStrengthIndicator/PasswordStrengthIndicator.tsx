@@ -49,16 +49,16 @@ export function PasswordStrengthIndicator({
   password,
 }: PasswordStrengthIndicatorProps) {
   const strength = calculatePasswordStrength(password)
-  const statusText = password
-    ? `Password Strength: ${strength.label}`
-    : 'Password Strength'
 
   return (
     <div
-      className={`${styles.indicator} ${strengthClassByLevel[strength.level]}`}
+      className={`${styles.indicator} ${strengthClassByLevel[strength.level]} ${password ? '' : styles.empty}`}
       id={id}
       aria-live="polite"
     >
+      <span className={styles.title} aria-hidden="true">
+        Strength
+      </span>
       <div className={styles.segments} aria-hidden="true">
         {[0, 1, 2, 3].map((segmentIndex) => (
           <span
@@ -71,7 +71,14 @@ export function PasswordStrengthIndicator({
           />
         ))}
       </div>
-      <span className={styles.label}>{statusText}</span>
+      <span className={styles.status} aria-hidden="true">
+        {password ? strength.label : 'Not set'}
+      </span>
+      <span className={styles.screenReaderText}>
+        {password
+          ? `Password strength is ${strength.label}`
+          : 'Password strength has not been evaluated'}
+      </span>
     </div>
   )
 }

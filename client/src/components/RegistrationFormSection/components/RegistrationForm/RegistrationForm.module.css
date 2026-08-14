@@ -1,18 +1,18 @@
 /* Controls the compact vertical rhythm of the complete registration form. */
 .form {
   display: grid;
-  gap: var(--spacing-md);
+  gap: 18px;
 }
 
 .fields {
   display: grid;
-  gap: var(--spacing-md);
+  gap: 18px;
 }
 
 .nameFields {
   display: grid;
   min-width: 0;
-  gap: var(--spacing-md);
+  gap: 12px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 

@@ -6,6 +6,7 @@
 .title {
   margin: 0;
   font-size: var(--font-size-display-md);
+  letter-spacing: var(--letter-spacing-display);
   line-height: var(--line-height-display-md);
 }
 
@@ -14,6 +15,7 @@
   color: var(--color-on-surface-variant);
   font-size: var(--font-size-body-md);
   line-height: var(--line-height-body-md);
+  text-wrap: pretty;
 }
 
 @media (width < 768px) {

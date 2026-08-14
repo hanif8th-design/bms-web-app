@@ -1,0 +1,21 @@
+/* Uses a compact semantic callout so errors are noticeable without dominating the form. */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding: 6px var(--spacing-sm);
+  border-left: 3px solid var(--color-error);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-label-md);
+}
+
+.icon {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--color-error);
+}

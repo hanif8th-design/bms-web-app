@@ -1,0 +1,31 @@
+/* Makes backward navigation discoverable without competing with the primary action. */
+.backLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-lg) -10px;
+  padding: 0 10px;
+  border-radius: var(--radius-md);
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-sm);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-duration-fast)
+      var(--transition-easing-standard),
+    color var(--transition-duration-fast) var(--transition-easing-standard),
+    transform var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.backLink:hover {
+  background-color: var(--color-surface-container-low);
+  color: var(--color-primary);
+  transform: translateX(-2px);
+}
+
+.backLink:active {
+  color: var(--color-primary-active);
+  transform: translateX(-1px);
+}

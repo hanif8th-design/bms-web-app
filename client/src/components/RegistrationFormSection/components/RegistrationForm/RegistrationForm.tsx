@@ -1,5 +1,5 @@
 // Owns typed registration state and exposes a clean future API integration boundary.
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { RegistrationFormField } from '../RegistrationFormField/RegistrationFormField'
 import { RegistrationPasswordField } from '../RegistrationPasswordField/RegistrationPasswordField'
 import { RegistrationSubmitButton } from '../RegistrationSubmitButton/RegistrationSubmitButton'
@@ -78,6 +78,7 @@ export function RegistrationForm() {
     Partial<Record<RegistrationFormFieldName, boolean>>
   >({})
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
   const validationErrors = validateRegistrationForm(values)
 
   const visibleError = (fieldName: RegistrationFormFieldName) =>
@@ -107,6 +108,12 @@ export function RegistrationForm() {
     setHasSubmitted(true)
 
     if (Object.values(validationErrors).some(Boolean)) {
+      // Move keyboard and screen-reader users directly to the first problem.
+      requestAnimationFrame(() => {
+        formRef.current
+          ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+          ?.focus()
+      })
       return
     }
 
@@ -114,7 +121,12 @@ export function RegistrationForm() {
   }
 
   return (
-    <form className={styles.form} noValidate onSubmit={handleSubmit}>
+    <form
+      className={styles.form}
+      noValidate
+      onSubmit={handleSubmit}
+      ref={formRef}
+    >
       <div className={styles.fields}>
         <div className={styles.nameFields}>
           <RegistrationFormField

@@ -1,6 +1,7 @@
 // Renders the required terms consent with real internal application links.
 import type { ChangeEventHandler, FocusEventHandler } from 'react'
 import { Link } from 'react-router-dom'
+import { RegistrationFieldMessage } from '../RegistrationFieldMessage/RegistrationFieldMessage'
 import styles from './TermsAgreement.module.css'
 
 interface TermsAgreementProps {
@@ -38,9 +39,7 @@ export function TermsAgreement({
         </label>
       </div>
       {error ? (
-        <p className={styles.error} id={errorId} role="alert">
-          {error}
-        </p>
+        <RegistrationFieldMessage id={errorId} message={error} />
       ) : null}
     </div>
   )

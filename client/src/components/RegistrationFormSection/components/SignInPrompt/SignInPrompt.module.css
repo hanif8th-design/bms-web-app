@@ -2,7 +2,7 @@
 .prompt {
   margin: 0;
   color: var(--color-on-surface-variant);
-  font-size: var(--font-size-label-md);
+  font-size: var(--font-size-body-sm);
   line-height: var(--line-height-body-sm);
   text-align: center;
 }
