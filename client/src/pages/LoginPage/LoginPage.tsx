@@ -1,19 +1,22 @@
-// Composes the login form and shared authentication showcase at the /login route.
-import { useRef } from 'react'
-import { LoginFormSection } from '../../components/LoginFormSection/LoginFormSection'
-import { RegistrationShowcaseSection } from '../../components/RegistrationShowcaseSection/RegistrationShowcaseSection'
-import { useAuthPageAnimation } from '../../hooks/useAuthPageAnimation'
-import styles from './LoginPage.module.css'
+// Composes login-specific content inside the shared authentication shell.
+import { AuthBackNavigation } from '../../components/Auth/AuthBackNavigation/AuthBackNavigation'
+import { AuthFormSection } from '../../components/Auth/AuthFormSection/AuthFormSection'
+import { AuthHeader } from '../../components/Auth/AuthHeader/AuthHeader'
+import { AuthPageLayout } from '../../components/Auth/AuthPageLayout/AuthPageLayout'
+import { LoginForm } from '../../components/LoginFormSection/components/LoginForm/LoginForm'
 
 export function LoginPage() {
-  const pageRef = useRef<HTMLElement>(null)
-
-  useAuthPageAnimation(pageRef)
-
   return (
-    <main className={styles.loginPage} ref={pageRef}>
-      <LoginFormSection />
-      <RegistrationShowcaseSection />
-    </main>
+    <AuthPageLayout>
+      <AuthFormSection labelledBy="login-heading">
+        <AuthBackNavigation />
+        <AuthHeader
+          description="Sign in to your BMS workspace to manage your operations and team."
+          headingId="login-heading"
+          title="Welcome back"
+        />
+        <LoginForm />
+      </AuthFormSection>
+    </AuthPageLayout>
   )
 }

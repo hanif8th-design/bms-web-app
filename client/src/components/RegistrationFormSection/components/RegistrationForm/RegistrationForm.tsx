@@ -1,9 +1,10 @@
 // Owns typed registration state and exposes a clean future API integration boundary.
 import { useRef, useState, type FormEvent } from 'react'
-import { RegistrationFormField } from '../RegistrationFormField/RegistrationFormField'
-import { RegistrationPasswordField } from '../RegistrationPasswordField/RegistrationPasswordField'
-import { RegistrationSubmitButton } from '../RegistrationSubmitButton/RegistrationSubmitButton'
-import { SignInPrompt } from '../SignInPrompt/SignInPrompt'
+import { AuthAccountPrompt } from '../../../Auth/AuthAccountPrompt/AuthAccountPrompt'
+import { AuthFormField } from '../../../Auth/AuthFormField/AuthFormField'
+import { AuthPasswordField } from '../../../Auth/AuthPasswordField/AuthPasswordField'
+import { AuthSubmitButton } from '../../../Auth/AuthSubmitButton/AuthSubmitButton'
+import { PasswordStrengthIndicator } from '../PasswordStrengthIndicator/PasswordStrengthIndicator'
 import { TermsAgreement } from '../TermsAgreement/TermsAgreement'
 import type {
   RegistrationFormErrors,
@@ -80,6 +81,7 @@ export function RegistrationForm() {
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
   const validationErrors = validateRegistrationForm(values)
+  const passwordStrengthId = 'password-strength'
 
   const visibleError = (fieldName: RegistrationFormFieldName) =>
     touchedFields[fieldName] || hasSubmitted
@@ -130,7 +132,7 @@ export function RegistrationForm() {
     >
       <div className={styles.fields}>
         <div className={styles.nameFields}>
-          <RegistrationFormField
+          <AuthFormField
             autoComplete="given-name"
             error={visibleError('firstName')}
             id="first-name"
@@ -141,7 +143,7 @@ export function RegistrationForm() {
             placeholder="John"
             value={values.firstName}
           />
-          <RegistrationFormField
+          <AuthFormField
             autoComplete="family-name"
             error={visibleError('lastName')}
             id="last-name"
@@ -153,7 +155,7 @@ export function RegistrationForm() {
             value={values.lastName}
           />
         </div>
-        <RegistrationFormField
+        <AuthFormField
           autoComplete="email"
           error={visibleError('email')}
           id="work-email"
@@ -165,7 +167,15 @@ export function RegistrationForm() {
           type="email"
           value={values.email}
         />
-        <RegistrationPasswordField
+        <AuthPasswordField
+          autoComplete="new-password"
+          belowInput={
+            <PasswordStrengthIndicator
+              id={passwordStrengthId}
+              password={values.password}
+            />
+          }
+          describedBy={passwordStrengthId}
           error={visibleError('password')}
           id="password"
           label="Password"
@@ -173,10 +183,10 @@ export function RegistrationForm() {
           onBlur={() => markFieldTouched('password')}
           onChange={(event) => updateValue('password', event.target.value)}
           placeholder="Enter a secure password"
-          showStrength
           value={values.password}
         />
-        <RegistrationPasswordField
+        <AuthPasswordField
+          autoComplete="new-password"
           error={visibleError('confirmPassword')}
           id="confirm-password"
           label="Confirm Password"
@@ -195,8 +205,12 @@ export function RegistrationForm() {
         onBlur={() => markFieldTouched('agreeToTerms')}
         onChange={(event) => updateValue('agreeToTerms', event.target.checked)}
       />
-      <RegistrationSubmitButton />
-      <SignInPrompt />
+      <AuthSubmitButton label="Create Account" />
+      <AuthAccountPrompt
+        linkLabel="Sign in"
+        prompt="Already have an account?"
+        to="/login"
+      />
     </form>
   )
 }

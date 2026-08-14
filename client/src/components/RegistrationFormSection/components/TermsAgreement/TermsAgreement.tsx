@@ -1,7 +1,7 @@
 // Renders the required terms consent with real internal application links.
 import type { ChangeEventHandler, FocusEventHandler } from 'react'
 import { Link } from 'react-router-dom'
-import { RegistrationFieldMessage } from '../RegistrationFieldMessage/RegistrationFieldMessage'
+import { AuthFieldMessage } from '../../../Auth/AuthFieldMessage/AuthFieldMessage'
 import styles from './TermsAgreement.module.css'
 
 interface TermsAgreementProps {
@@ -38,7 +38,7 @@ export function TermsAgreement({
           <Link to="/privacy">Privacy Policy</Link>.
         </label>
       </div>
-      <RegistrationFieldMessage id={errorId} message={error} />
+      <AuthFieldMessage id={errorId} message={error} />
     </div>
   )
 }

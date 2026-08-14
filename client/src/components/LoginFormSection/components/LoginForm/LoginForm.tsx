@@ -1,15 +1,15 @@
 // Owns login state, client-side validation, and the future authentication boundary.
 import { useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { RegistrationFormField } from '../../../RegistrationFormSection/components/RegistrationFormField/RegistrationFormField'
-import { RegistrationPasswordField } from '../../../RegistrationFormSection/components/RegistrationPasswordField/RegistrationPasswordField'
+import { AuthAccountPrompt } from '../../../Auth/AuthAccountPrompt/AuthAccountPrompt'
+import { AuthFormField } from '../../../Auth/AuthFormField/AuthFormField'
+import { AuthPasswordField } from '../../../Auth/AuthPasswordField/AuthPasswordField'
+import { AuthSubmitButton } from '../../../Auth/AuthSubmitButton/AuthSubmitButton'
 import type {
   LoginFormErrors,
   LoginFormFieldName,
   LoginFormValues,
 } from '../../loginForm.types'
-import { LoginSubmitButton } from '../LoginSubmitButton/LoginSubmitButton'
-import { SignUpPrompt } from '../SignUpPrompt/SignUpPrompt'
 import styles from './LoginForm.module.css'
 
 const initialValues: LoginFormValues = {
@@ -92,7 +92,7 @@ export function LoginForm() {
       ref={formRef}
     >
       <div className={styles.fields}>
-        <RegistrationFormField
+        <AuthFormField
           autoComplete="email"
           error={visibleError('email')}
           id="login-email"
@@ -105,7 +105,7 @@ export function LoginForm() {
           value={values.email}
         />
         <div className={styles.passwordField}>
-          <RegistrationPasswordField
+          <AuthPasswordField
             autoComplete="current-password"
             error={visibleError('password')}
             id="login-password"
@@ -121,8 +121,12 @@ export function LoginForm() {
           </Link>
         </div>
       </div>
-      <LoginSubmitButton />
-      <SignUpPrompt />
+      <AuthSubmitButton label="Sign In to Dashboard" />
+      <AuthAccountPrompt
+        linkLabel="Create account"
+        prompt="Don't have an account?"
+        to="/register"
+      />
     </form>
   )
 }

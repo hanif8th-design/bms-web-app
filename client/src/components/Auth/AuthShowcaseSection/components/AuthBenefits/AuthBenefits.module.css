@@ -1,0 +1,15 @@
+/* Keeps shared benefit cards horizontal until compact mobile widths. */
+.benefitList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+}
+
+@media (width < 540px) {
+  .benefitList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

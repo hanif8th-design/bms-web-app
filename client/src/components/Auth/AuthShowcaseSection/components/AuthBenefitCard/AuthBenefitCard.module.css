@@ -1,0 +1,59 @@
+/* Styles shared benefit cards with restrained elevation and icon emphasis. */
+.card {
+  min-width: 0;
+  min-height: 166px;
+  padding: var(--spacing-lg);
+  border: var(--border-width-default) solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-medium);
+}
+
+.iconContainer {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+  color: var(--color-primary);
+  place-items: center;
+}
+
+.card:nth-child(2) .iconContainer {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-body-lg);
+  letter-spacing: var(--letter-spacing-title);
+  line-height: var(--line-height-title-md);
+}
+
+.description {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+}
+
+@media (width < 540px) {
+  .card {
+    min-height: 0;
+  }
+}
+
+@media (height < 650px) and (width >= 880px) {
+  .card {
+    min-height: 0;
+    padding: var(--spacing-md);
+  }
+
+  .iconContainer {
+    width: 36px;
+    height: 36px;
+    margin-bottom: var(--spacing-sm);
+  }
+}

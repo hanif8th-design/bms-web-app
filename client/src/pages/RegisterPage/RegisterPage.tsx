@@ -1,19 +1,22 @@
-// Composes the two primary sections of the public account-registration page.
-import { useRef } from 'react'
-import { RegistrationFormSection } from '../../components/RegistrationFormSection/RegistrationFormSection'
-import { RegistrationShowcaseSection } from '../../components/RegistrationShowcaseSection/RegistrationShowcaseSection'
-import { useAuthPageAnimation } from '../../hooks/useAuthPageAnimation'
-import styles from './RegisterPage.module.css'
+// Composes registration-specific content inside the shared authentication shell.
+import { AuthBackNavigation } from '../../components/Auth/AuthBackNavigation/AuthBackNavigation'
+import { AuthFormSection } from '../../components/Auth/AuthFormSection/AuthFormSection'
+import { AuthHeader } from '../../components/Auth/AuthHeader/AuthHeader'
+import { AuthPageLayout } from '../../components/Auth/AuthPageLayout/AuthPageLayout'
+import { RegistrationForm } from '../../components/RegistrationFormSection/components/RegistrationForm/RegistrationForm'
 
 export function RegisterPage() {
-  const pageRef = useRef<HTMLElement>(null)
-
-  useAuthPageAnimation(pageRef)
-
   return (
-    <main className={styles.registerPage} ref={pageRef}>
-      <RegistrationFormSection />
-      <RegistrationShowcaseSection />
-    </main>
+    <AuthPageLayout>
+      <AuthFormSection labelledBy="register-heading">
+        <AuthBackNavigation />
+        <AuthHeader
+          description="Start managing your business efficiently."
+          headingId="register-heading"
+          title="Create Account"
+        />
+        <RegistrationForm />
+      </AuthFormSection>
+    </AuthPageLayout>
   )
 }

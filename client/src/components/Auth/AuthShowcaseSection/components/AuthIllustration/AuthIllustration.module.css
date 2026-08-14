@@ -1,0 +1,77 @@
+/* Frames the BMS artwork with the shared rounded and elevated treatment. */
+.illustration {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  border: var(--border-width-default) solid var(--color-divider);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(var(--color-divider) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-divider) 1px, transparent 1px),
+    linear-gradient(
+      145deg,
+      var(--color-surface-container-lowest),
+      var(--color-primary-container)
+    );
+  background-size: 32px 32px, 32px 32px, auto;
+  box-shadow: var(--shadow-high);
+}
+
+.illustration::before,
+.illustration::after {
+  position: absolute;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+  content: '';
+  opacity: 0.72;
+}
+
+.illustration::before {
+  top: -22%;
+  right: -8%;
+  width: 52%;
+  aspect-ratio: 1;
+}
+
+.illustration::after {
+  bottom: -34%;
+  left: -10%;
+  width: 62%;
+  aspect-ratio: 1;
+}
+
+.logoSurface {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: var(--spacing-2xl);
+  place-items: center;
+}
+
+.logo {
+  width: 76%;
+  padding: var(--spacing-xl);
+  border: var(--border-width-default) solid var(--color-divider);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-medium);
+}
+
+@media (width < 880px) {
+  .illustration {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (width < 480px) {
+  .logoSurface {
+    padding: var(--spacing-lg);
+  }
+
+  .logo {
+    width: 86%;
+    padding: var(--spacing-lg);
+  }
+}
