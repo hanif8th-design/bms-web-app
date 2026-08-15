@@ -1,0 +1,159 @@
+.heroSection {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: calc(100vh - var(--layout-public-navbar-height));
+  height: calc(100svh - var(--layout-public-navbar-height));
+  min-height: 0;
+  align-items: center;
+  overflow: clip;
+  background:
+    radial-gradient(
+      circle at 84% 12%,
+      color-mix(in srgb, var(--color-primary-container) 72%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(
+      118deg,
+      var(--color-surface-container-lowest) 0%,
+      color-mix(
+          in srgb,
+          var(--color-surface) 82%,
+          var(--color-primary-container)
+        )
+        56%,
+      color-mix(
+          in srgb,
+          var(--color-surface-container-lowest) 64%,
+          var(--color-primary-container)
+        )
+        100%
+    );
+  color: var(--color-on-surface);
+}
+
+.heroSection::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--color-primary) 4%, transparent)
+        var(--border-width-default),
+      transparent var(--border-width-default)
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-primary) 4%, transparent)
+        var(--border-width-default),
+      transparent var(--border-width-default)
+    );
+  background-size: 48px 48px;
+  content: '';
+  mask-image: linear-gradient(to right, transparent 12%, black 68%, transparent);
+  pointer-events: none;
+}
+
+.heroLayout {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  align-items: center;
+  grid-template-columns: minmax(0, 1.05fr) minmax(480px, 0.95fr);
+  gap: clamp(var(--spacing-xl), 5vw, var(--spacing-4xl));
+  padding-block: clamp(var(--spacing-xl), 6vh, var(--spacing-3xl));
+}
+
+@media (width < 1120px) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(440px, 1.1fr);
+    gap: var(--spacing-xl);
+  }
+}
+
+/* The preview stacks once both columns can no longer preserve readable content widths. */
+@media (width < 920px) {
+  .heroSection {
+    background:
+      radial-gradient(
+        circle at 88% 58%,
+        color-mix(in srgb, var(--color-primary-container) 68%, transparent),
+        transparent 38%
+      ),
+      linear-gradient(
+        148deg,
+        var(--color-surface-container-lowest) 0%,
+        color-mix(
+            in srgb,
+            var(--color-surface) 86%,
+            var(--color-primary-container)
+          )
+          100%
+      );
+  }
+
+  .heroLayout {
+    align-content: center;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: var(--spacing-2xl);
+    padding-top: clamp(
+      var(--spacing-3xl),
+      7vh,
+      calc(var(--spacing-3xl) + var(--spacing-md))
+    );
+    padding-bottom: clamp(var(--spacing-lg), 3vh, var(--spacing-xl));
+  }
+}
+
+/* Tablet and mobile present the stacked hero as one centered composition. */
+@media (width < 920px) {
+  .heroLayout {
+    justify-items: center;
+  }
+}
+
+@media (width < 768px) {
+  .heroSection {
+    border-bottom: var(--border-width-default) solid
+      color-mix(in srgb, var(--color-primary) 14%, var(--color-outline-variant));
+    background: linear-gradient(
+      158deg,
+      var(--color-surface-container-lowest) 0%,
+      color-mix(
+          in srgb,
+          var(--color-surface) 84%,
+          var(--color-primary-container)
+        )
+        100%
+    );
+  }
+
+  .heroSection::before {
+    display: none;
+  }
+
+  .heroLayout {
+    gap: var(--spacing-xl);
+    padding-top: clamp(var(--spacing-2xl), 6vh, var(--spacing-3xl));
+    padding-bottom: var(--spacing-md);
+  }
+}
+
+@media (height < 700px) and (width >= 920px) {
+  .heroLayout {
+    padding-block: var(--spacing-lg);
+  }
+}
+
+/* Short tablet and mobile screens let the image consume only the available second row. */
+@media (height < 760px) and (width < 920px) {
+  .heroLayout {
+    align-content: stretch;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--spacing-lg);
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+  }
+}

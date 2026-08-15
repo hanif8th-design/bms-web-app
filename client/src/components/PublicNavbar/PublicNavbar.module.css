@@ -1,11 +1,9 @@
 .publicNavbar {
-  --public-navbar-height: 80px;
-
   position: sticky;
   z-index: 100;
   top: 0;
   width: 100%;
-  height: var(--public-navbar-height);
+  height: var(--layout-public-navbar-height);
   border-bottom: var(--border-width-default) solid var(--color-outline-variant);
   background-color: var(--color-surface-container-lowest);
 }
@@ -26,11 +24,5 @@
 @media (width < 1180px) {
   .navbarInner {
     gap: var(--spacing-md);
-  }
-}
-
-@media (width < 768px) {
-  .publicNavbar {
-    --public-navbar-height: 64px;
   }
 }

@@ -1,0 +1,123 @@
+.heroContent {
+  position: relative;
+  min-width: 0;
+  max-width: 680px;
+  padding-top: var(--spacing-md);
+}
+
+.heroContent::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--spacing-2xl);
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  content: '';
+}
+
+.headline {
+  max-width: 660px;
+  margin: 0;
+  color: var(--color-on-primary-container);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--font-size-display-lg), 4.6vw, 64px);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-display);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.subheading {
+  max-width: 560px;
+  margin: var(--spacing-lg) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg);
+}
+
+@media (width < 1120px) {
+  .headline {
+    font-size: clamp(var(--font-size-display-md), 4.5vw, 52px);
+  }
+}
+
+@media (width < 920px) {
+  .heroContent {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .headline {
+    max-width: 700px;
+    font-size: clamp(var(--font-size-display-md), 6.2vw, 52px);
+  }
+
+  .subheading {
+    max-width: 540px;
+  }
+}
+
+@media (width < 920px) {
+  .heroContent {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .heroContent::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .headline,
+  .subheading {
+    margin-inline: auto;
+  }
+}
+
+@media (width < 768px) {
+  .heroContent {
+    max-width: 600px;
+    padding-top: var(--spacing-sm);
+  }
+
+  .heroContent::before {
+    width: var(--spacing-xl);
+    height: 3px;
+  }
+
+  .headline {
+    max-width: 560px;
+    font-size: clamp(var(--font-size-display-lg), 8vw, 42px);
+    line-height: 1.1;
+  }
+
+  .subheading {
+    max-width: 500px;
+    margin-top: var(--spacing-md);
+    font-size: var(--font-size-body-md);
+    line-height: var(--line-height-body-md);
+  }
+}
+
+@media (height < 700px) and (width >= 920px) {
+  .headline {
+    font-size: clamp(var(--font-size-display-md), 4.2vw, 52px);
+  }
+
+  .subheading {
+    margin-top: var(--spacing-md);
+  }
+}
+
+@media (height < 650px) and (width < 768px) {
+  .headline {
+    font-size: var(--font-size-display-lg);
+  }
+
+  .subheading {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body-sm);
+  }
+}

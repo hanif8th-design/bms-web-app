@@ -1,3 +1,4 @@
+import { HeroSection } from '../../components/HeroSection/HeroSection'
 import { PublicNavbar } from '../../components/PublicNavbar/PublicNavbar'
 
 export function HomePage() {
@@ -5,7 +6,7 @@ export function HomePage() {
     <>
       <PublicNavbar />
       <main>
-        <h1>home page</h1>
+        <HeroSection />
       </main>
     </>
   )
