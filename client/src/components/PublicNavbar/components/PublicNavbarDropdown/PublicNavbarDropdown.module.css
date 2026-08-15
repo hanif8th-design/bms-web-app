@@ -40,21 +40,56 @@
 }
 
 .menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desktopPanel {
   position: absolute;
   z-index: 120;
   top: calc(100% + var(--spacing-sm));
-  left: 0;
-  width: 280px;
-  margin: 0;
+  left: 50%;
+  width: 380px;
   padding: var(--spacing-sm);
-  border: var(--border-width-default) solid var(--color-outline-variant);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 18%, var(--color-outline-variant));
   border-radius: var(--radius-lg);
+  background: linear-gradient(
+    145deg,
+    var(--color-surface-container-lowest),
+    color-mix(
+      in srgb,
+      var(--color-surface) 82%,
+      var(--color-primary-container)
+    )
+  );
+  box-shadow: var(--shadow-high);
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% 0;
+  visibility: hidden;
+}
+
+.desktopPanel::before {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-top: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 18%, var(--color-outline-variant));
+  border-left: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 18%, var(--color-outline-variant));
   background-color: var(--color-surface-container-lowest);
-  box-shadow: var(--shadow-medium);
-  list-style: none;
-  transform-origin: top left;
-  animation: revealMenu var(--transition-duration-fast)
-    var(--transition-easing-standard);
+  content: '';
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.desktop .menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-xs);
 }
 
 .menuLink {
@@ -69,6 +104,7 @@
   line-height: var(--line-height-body-md);
   text-decoration: none;
   transition:
+    transform var(--transition-duration-fast) var(--transition-easing-standard),
     color var(--transition-duration-fast) var(--transition-easing-standard),
     background-color var(--transition-duration-fast)
       var(--transition-easing-standard);
@@ -76,26 +112,19 @@
 
 .menuLink:hover,
 .menuLink:focus-visible {
-  background-color: var(--color-surface-container-low);
-  color: var(--color-primary);
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-container) 62%,
+    var(--color-surface-container-lowest)
+  );
+  color: var(--color-on-primary-container);
+  transform: translateY(-1px);
 }
 
 .activeMenuLink {
   background-color: var(--color-primary-container);
   color: var(--color-on-primary-container);
   font-weight: var(--font-weight-medium);
-}
-
-@keyframes revealMenu {
-  from {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.99);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 @media (width < 1180px) {
@@ -126,7 +155,6 @@
   }
 
   .mobile .menu {
-    position: static;
     width: 100%;
     margin-block: var(--spacing-xs) var(--spacing-sm);
     padding-block: var(--spacing-xs);
@@ -136,7 +164,6 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    animation: none;
   }
 
   .mobile .menuLink {
@@ -157,7 +184,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu {
-    animation: none;
+  .menuLink:hover,
+  .menuLink:focus-visible {
+    transform: none;
   }
 }

@@ -1,11 +1,11 @@
 .backdrop {
   position: fixed;
   z-index: 90;
-  inset: var(--public-navbar-height) 0 0;
+  inset: var(--layout-public-navbar-height) 0 0;
   display: block;
   width: 100%;
-  height: calc(100vh - var(--public-navbar-height));
-  height: calc(100dvh - var(--public-navbar-height));
+  height: calc(100vh - var(--layout-public-navbar-height));
+  height: calc(100dvh - var(--layout-public-navbar-height));
   padding: 0;
   border: 0;
   background-color: rgb(25 28 30 / 28%);
@@ -17,11 +17,11 @@
 .mobileMenu {
   position: fixed;
   z-index: 100;
-  top: var(--public-navbar-height);
+  top: var(--layout-public-navbar-height);
   right: 0;
   width: min(420px, 100%);
-  height: calc(100vh - var(--public-navbar-height));
-  height: calc(100dvh - var(--public-navbar-height));
+  height: calc(100vh - var(--layout-public-navbar-height));
+  height: calc(100dvh - var(--layout-public-navbar-height));
   overflow-x: hidden;
   overflow-y: auto;
   border-left: var(--border-width-default) solid var(--color-outline-variant);

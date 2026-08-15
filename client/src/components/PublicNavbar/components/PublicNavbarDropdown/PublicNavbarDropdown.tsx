@@ -34,6 +34,7 @@ export function PublicNavbarDropdown({
   const isOpen = controlledIsOpen ?? uncontrolledIsOpen
   const dropdownId = useId()
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
+  const desktopPanelRef = useRef<HTMLDivElement>(null)
   const mobileAccordionRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLUListElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -57,16 +58,45 @@ export function PublicNavbarDropdown({
   useGSAP(
     () => {
       const accordionElement = mobileAccordionRef.current
+      const desktopPanelElement = desktopPanelRef.current
       const menuElement = menuRef.current
       const prefersReducedMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches
 
-      if (
-        presentation !== 'mobile' ||
-        !accordionElement ||
-        !menuElement
-      ) {
+      if (!menuElement) {
+        return
+      }
+
+      if (presentation === 'desktop' && desktopPanelElement) {
+        if (prefersReducedMotion) {
+          gsap.set(desktopPanelElement, {
+            autoAlpha: isOpen ? 1 : 0,
+            pointerEvents: isOpen ? 'auto' : 'none',
+            scale: 1,
+            y: 0,
+          })
+          return
+        }
+
+        // The mounted wrapper makes closing as smooth and interruptible as opening.
+        gsap.to(desktopPanelElement, {
+          autoAlpha: isOpen ? 1 : 0,
+          duration: isOpen ? 0.26 : 0.2,
+          ease: isOpen ? 'power2.out' : 'power2.in',
+          onComplete: () =>
+            gsap.set(desktopPanelElement, { clearProps: 'willChange' }),
+          overwrite: 'auto',
+          pointerEvents: isOpen ? 'auto' : 'none',
+          scale: isOpen ? 1 : 0.975,
+          transformOrigin: 'top center',
+          willChange: 'transform,opacity',
+          y: isOpen ? 0 : -8,
+        })
+        return
+      }
+
+      if (presentation !== 'mobile' || !accordionElement) {
         return
       }
 
@@ -243,7 +273,7 @@ export function PublicNavbarDropdown({
 
   const dropdownMenu = (
     <ul
-      aria-hidden={presentation === 'mobile' && !isOpen}
+      aria-hidden={!isOpen}
       aria-label={`${item.label} navigation`}
       className={styles.menu}
       id={dropdownId}
@@ -300,8 +330,11 @@ export function PublicNavbarDropdown({
         <div className={styles.mobileAccordion} ref={mobileAccordionRef}>
           {dropdownMenu}
         </div>
-      ) : isOpen ? (
-        dropdownMenu
+      ) : null}
+      {presentation === 'desktop' ? (
+        <div className={styles.desktopPanel} ref={desktopPanelRef}>
+          {dropdownMenu}
+        </div>
       ) : null}
     </div>
   )
