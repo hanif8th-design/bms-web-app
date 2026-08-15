@@ -96,7 +96,7 @@ export function LoginForm() {
           autoComplete="email"
           error={visibleError('email')}
           id="login-email"
-          label="WORK EMAIL"
+          label="Work Email"
           name="email"
           onBlur={() => markFieldTouched('email')}
           onChange={(event) => updateValue('email', event.target.value)}
@@ -109,7 +109,7 @@ export function LoginForm() {
             autoComplete="current-password"
             error={visibleError('password')}
             id="login-password"
-            label="PASSWORD"
+            label="Password"
             name="password"
             onBlur={() => markFieldTouched('password')}
             onChange={(event) => updateValue('password', event.target.value)}
