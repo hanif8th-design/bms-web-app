@@ -1,13 +1,20 @@
-// Provides consistent keyboard-accessible navigation back to the public home page.
+// Returns users to the page that opened the authentication flow.
 import { RiArrowLeftLine } from '@remixicon/react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './AuthBackNavigation.module.css'
 
 export function AuthBackNavigation() {
+  const navigate = useNavigate()
+
   return (
-    <Link className={styles.backLink} data-auth-animation-item to="/">
+    <button
+      className={styles.backLink}
+      data-auth-animation-item
+      onClick={() => navigate(-1)}
+      type="button"
+    >
       <RiArrowLeftLine aria-hidden="true" size={18} />
       <span>Back</span>
-    </Link>
+    </button>
   )
 }
