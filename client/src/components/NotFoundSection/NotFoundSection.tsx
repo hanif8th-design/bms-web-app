@@ -1,43 +1,47 @@
-import { useRef } from 'react'
-import { useNotFoundAnimation } from '../../hooks/useNotFoundAnimation'
-import { NotFoundDecorativeArrow } from './components/NotFoundDecorativeArrow/NotFoundDecorativeArrow'
-import { NotFoundDecorativeNumber } from './components/NotFoundDecorativeNumber/NotFoundDecorativeNumber'
-import { NotFoundMessagePanel } from './components/NotFoundMessagePanel/NotFoundMessagePanel'
+import { RiArrowLeftLine, RiHome4Line } from '@remixicon/react'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './NotFoundSection.module.css'
 
 const notFoundHeadingId = 'not-found-heading'
 
-/** Assembles the decorative 4-panel-4 composition around the usable message. */
+/** Presents a simple recovery path when a public route cannot be found. */
 export function NotFoundSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useNotFoundAnimation(sectionRef)
+  const navigate = useNavigate()
 
   return (
     <section
       aria-labelledby={notFoundHeadingId}
       className={styles.section}
-      ref={sectionRef}
     >
-      <div className={styles.composition}>
-        <div
-          className={`${styles.numberPosition} ${styles.leftNumber}`}
-          data-not-found-number="left"
-        >
-          <NotFoundDecorativeNumber />
+      <div className={`${styles.content} page-container`}>
+        <p className={styles.eyebrow}>
+          <span aria-hidden="true" className={styles.statusDot} />
+          Page not found
+        </p>
+        <p aria-hidden="true" className={styles.errorCode}>
+          404
+        </p>
+        <h1 className={styles.heading} id={notFoundHeadingId}>
+          This page isn&apos;t available.
+        </h1>
+        <p className={styles.description}>
+          The link may be broken, or the page may have been moved. Let&apos;s get
+          you back to somewhere useful.
+        </p>
+        <div aria-label="Page recovery" className={styles.actions} role="group">
+          <Link className={`${styles.action} ${styles.primaryAction}`} to="/">
+            <RiHome4Line aria-hidden="true" size={20} />
+            Back to home
+          </Link>
+          <button
+            className={`${styles.action} ${styles.secondaryAction}`}
+            onClick={() => navigate(-1)}
+            type="button"
+          >
+            <RiArrowLeftLine aria-hidden="true" size={20} />
+            Go back
+          </button>
         </div>
-
-        <NotFoundMessagePanel headingId={notFoundHeadingId} />
-
-        <div
-          className={`${styles.numberPosition} ${styles.rightNumber}`}
-          data-not-found-number="right"
-        >
-          <NotFoundDecorativeNumber />
-        </div>
-
-        <NotFoundDecorativeArrow placement="left" />
-        <NotFoundDecorativeArrow placement="right" />
       </div>
     </section>
   )
