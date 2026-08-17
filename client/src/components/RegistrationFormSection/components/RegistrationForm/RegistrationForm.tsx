@@ -1,9 +1,14 @@
 // Owns typed registration state and exposes a clean future API integration boundary.
+import { RiCheckboxCircleLine, RiErrorWarningLine } from '@remixicon/react'
 import { useRef, useState, type FormEvent } from 'react'
 import { AuthAccountPrompt } from '../../../Auth/AuthAccountPrompt/AuthAccountPrompt'
 import { AuthFormField } from '../../../Auth/AuthFormField/AuthFormField'
 import { AuthPasswordField } from '../../../Auth/AuthPasswordField/AuthPasswordField'
 import { AuthSubmitButton } from '../../../Auth/AuthSubmitButton/AuthSubmitButton'
+import {
+  AccountsApiError,
+  registerAccount,
+} from '../../../../api/accounts'
 import { PasswordStrengthIndicator } from '../PasswordStrengthIndicator/PasswordStrengthIndicator'
 import { TermsAgreement } from '../TermsAgreement/TermsAgreement'
 import type {
@@ -23,6 +28,63 @@ const initialValues: RegistrationFormValues = {
 }
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+interface SubmissionFeedback {
+  message: string
+  tone: 'error' | 'success'
+}
+
+const apiFieldMap: Partial<Record<string, RegistrationFormFieldName>> = {
+  email: 'email',
+  first_name: 'firstName',
+  last_name: 'lastName',
+  password: 'password',
+}
+
+function readApiErrorMessage(value: unknown): string | undefined {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const message = readApiErrorMessage(item)
+      if (message) {
+        return message
+      }
+    }
+  }
+
+  return undefined
+}
+
+function mapApiErrors(details: unknown): {
+  fieldErrors: RegistrationFormErrors
+  formError?: string
+} {
+  const fieldErrors: RegistrationFormErrors = {}
+  let formError: string | undefined
+
+  if (!details || typeof details !== 'object' || Array.isArray(details)) {
+    return { fieldErrors }
+  }
+
+  for (const [apiFieldName, value] of Object.entries(details)) {
+    const message = readApiErrorMessage(value)
+    if (!message) {
+      continue
+    }
+
+    const formFieldName = apiFieldMap[apiFieldName]
+    if (formFieldName) {
+      fieldErrors[formFieldName] = message
+    } else if (!formError) {
+      formError = message
+    }
+  }
+
+  return { fieldErrors, formError }
+}
 
 function validateRegistrationForm(
   values: RegistrationFormValues,
@@ -79,14 +141,20 @@ export function RegistrationForm() {
     Partial<Record<RegistrationFormFieldName, boolean>>
   >({})
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [serverErrors, setServerErrors] =
+    useState<RegistrationFormErrors>({})
+  const [submissionFeedback, setSubmissionFeedback] =
+    useState<SubmissionFeedback | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const validationErrors = validateRegistrationForm(values)
   const passwordStrengthId = 'password-strength'
 
   const visibleError = (fieldName: RegistrationFormFieldName) =>
-    touchedFields[fieldName] || hasSubmitted
+    serverErrors[fieldName] ??
+    (touchedFields[fieldName] || hasSubmitted
       ? validationErrors[fieldName]
-      : undefined
+      : undefined)
 
   const markFieldTouched = (fieldName: RegistrationFormFieldName) => {
     setTouchedFields((currentFields) => ({
@@ -103,23 +171,88 @@ export function RegistrationForm() {
       ...currentValues,
       [fieldName]: value,
     }))
+
+    setServerErrors((currentErrors) => {
+      if (!currentErrors[fieldName]) {
+        return currentErrors
+      }
+
+      const nextErrors = { ...currentErrors }
+      delete nextErrors[fieldName]
+      return nextErrors
+    })
+    setSubmissionFeedback(null)
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setHasSubmitted(true)
+  const focusFirstInvalidField = () => {
+    requestAnimationFrame(() => {
+      formRef.current
+        ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+        ?.focus()
+    })
+  }
 
-    if (Object.values(validationErrors).some(Boolean)) {
-      // Move keyboard and screen-reader users directly to the first problem.
-      requestAnimationFrame(() => {
-        formRef.current
-          ?.querySelector<HTMLElement>('[aria-invalid="true"]')
-          ?.focus()
-      })
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (isSubmitting) {
       return
     }
 
-    // Future Django integration boundary: submit `values` to the real endpoint here.
+    setHasSubmitted(true)
+    setServerErrors({})
+    setSubmissionFeedback(null)
+
+    if (Object.values(validationErrors).some(Boolean)) {
+      // Move keyboard and screen-reader users directly to the first problem.
+      focusFirstInvalidField()
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await registerAccount({
+        email: values.email.trim().toLowerCase(),
+        first_name: values.firstName.trim(),
+        last_name: values.lastName.trim(),
+        password: values.password,
+      })
+
+      setValues(initialValues)
+      setTouchedFields({})
+      setHasSubmitted(false)
+      setSubmissionFeedback({ message: response.message, tone: 'success' })
+    } catch (error) {
+      if (error instanceof AccountsApiError) {
+        const { fieldErrors, formError } = mapApiErrors(error.details)
+        const hasFieldErrors = Object.keys(fieldErrors).length > 0
+
+        setServerErrors(fieldErrors)
+        setSubmissionFeedback({
+          message:
+            formError ??
+            (error.status === 429
+              ? 'Too many registration attempts. Please try again later.'
+              : hasFieldErrors
+                ? 'Please review the highlighted fields and try again.'
+                : 'Registration could not be completed. Please try again.'),
+          tone: 'error',
+        })
+
+        if (hasFieldErrors) {
+          focusFirstInvalidField()
+        }
+      } else {
+        setSubmissionFeedback({
+          message:
+            'Unable to reach the registration service. Check your connection and try again.',
+          tone: 'error',
+        })
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -205,7 +338,29 @@ export function RegistrationForm() {
         onBlur={() => markFieldTouched('agreeToTerms')}
         onChange={(event) => updateValue('agreeToTerms', event.target.checked)}
       />
-      <AuthSubmitButton label="Create Account" />
+      {submissionFeedback ? (
+        <div
+          aria-live="polite"
+          className={`${styles.submissionFeedback} ${
+            submissionFeedback.tone === 'success'
+              ? styles.successFeedback
+              : styles.errorFeedback
+          }`}
+          role={submissionFeedback.tone === 'error' ? 'alert' : 'status'}
+        >
+          {submissionFeedback.tone === 'success' ? (
+            <RiCheckboxCircleLine aria-hidden="true" size={18} />
+          ) : (
+            <RiErrorWarningLine aria-hidden="true" size={18} />
+          )}
+          <span>{submissionFeedback.message}</span>
+        </div>
+      ) : null}
+      <AuthSubmitButton
+        isPending={isSubmitting}
+        label="Create Account"
+        pendingLabel="Creating account..."
+      />
       <AuthAccountPrompt
         linkLabel="Sign in"
         prompt="Already have an account?"

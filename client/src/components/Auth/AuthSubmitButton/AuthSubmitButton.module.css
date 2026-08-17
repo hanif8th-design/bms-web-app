@@ -34,3 +34,28 @@
   box-shadow: var(--shadow-low);
   transform: translateY(1px);
 }
+
+.submitButton:disabled {
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary) 72%,
+    var(--color-surface-container-high)
+  );
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submitButton[aria-busy='true'] {
+  cursor: wait;
+}
+
+.pendingIcon {
+  animation: submit-button-spin 900ms linear infinite;
+}
+
+@keyframes submit-button-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
