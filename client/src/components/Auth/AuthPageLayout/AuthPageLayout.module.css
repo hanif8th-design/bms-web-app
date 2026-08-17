@@ -10,7 +10,6 @@
   overflow: hidden;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   background-color: var(--color-surface-container-lowest);
-  box-shadow: var(--shadow-high);
 }
 
 @media (width < 880px) {
@@ -20,6 +19,5 @@
     min-height: 100dvh;
     overflow: visible;
     grid-template-columns: minmax(0, 1fr);
-    box-shadow: none;
   }
 }

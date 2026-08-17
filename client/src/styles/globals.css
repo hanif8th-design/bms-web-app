@@ -2,8 +2,8 @@
  * Application-wide base styles
  *
  * This file defines the document canvas, default typography, shared interaction
- * states, and the single global page container. Component visuals, page-specific
- * layouts, and broad utility-class systems do not belong here.
+ * states. Component visuals, page-specific layouts, and broad utility-class
+ * systems do not belong here.
  */
 
 /* ==========================================================================
@@ -121,18 +121,4 @@ textarea {
 ::selection {
   background-color: var(--color-selection);
   color: var(--color-on-selection);
-}
-
-/* ==========================================================================
-   Shared Layout
-   ========================================================================== */
-
-/* The one global container aligns page content to the responsive layout tokens. */
-.page-container {
-  width: 100%;
-  max-width: calc(
-    var(--layout-max-width) + (2 * var(--layout-page-margin))
-  );
-  margin-inline: auto;
-  padding-inline: var(--layout-page-margin);
 }

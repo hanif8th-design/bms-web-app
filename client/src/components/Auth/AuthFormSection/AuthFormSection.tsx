@@ -1,5 +1,6 @@
 // Supplies the independently scrollable form pane shared by authentication flows.
 import type { ReactNode } from 'react'
+import { Container } from '../../layout/Container/Container'
 import styles from './AuthFormSection.module.css'
 
 interface AuthFormSectionProps {
@@ -13,7 +14,9 @@ export function AuthFormSection({
 }: AuthFormSectionProps) {
   return (
     <section className={styles.formSection} aria-labelledby={labelledBy}>
-      <div className={styles.formContent}>{children}</div>
+      <Container className={styles.formContainer}>
+        <div className={styles.formContent}>{children}</div>
+      </Container>
     </section>
   )
 }

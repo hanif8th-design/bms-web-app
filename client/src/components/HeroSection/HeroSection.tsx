@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useHeroSectionAnimation } from '../../hooks/useHeroSectionAnimation'
+import { Container } from '../layout/Container/Container'
 import { HeroContent } from './components/HeroContent/HeroContent'
 import { HeroProductPreview } from './components/HeroProductPreview/HeroProductPreview'
 import styles from './HeroSection.module.css'
@@ -18,10 +19,10 @@ export function HeroSection() {
       className={styles.heroSection}
       ref={sectionRef}
     >
-      <div className={`page-container ${styles.heroLayout}`}>
+      <Container className={styles.heroLayout}>
         <HeroContent headingId={heroHeadingId} />
         <HeroProductPreview />
-      </div>
+      </Container>
     </section>
   )
 }

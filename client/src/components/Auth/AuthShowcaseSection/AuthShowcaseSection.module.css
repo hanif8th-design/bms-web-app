@@ -6,9 +6,8 @@
   min-width: 0;
   min-height: 0;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
-  padding: var(--spacing-lg) var(--spacing-2xl);
+  padding-block: var(--spacing-lg);
   background:
     radial-gradient(
       circle at 90% 8%,
@@ -37,6 +36,13 @@
   opacity: 0.48;
 }
 
+.showcaseContainer {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .showcaseContent {
   display: grid;
   width: 100%;
@@ -45,10 +51,6 @@
 }
 
 @media (width < 1024px) {
-  .showcaseSection {
-    padding-inline: var(--spacing-lg);
-  }
-
   .showcaseContent {
     gap: var(--spacing-lg);
   }
@@ -68,7 +70,7 @@
 @media (width < 880px) {
   .showcaseSection {
     height: auto;
-    padding: var(--spacing-2xl) var(--layout-page-margin);
+    padding-block: var(--spacing-2xl);
   }
 
   .showcaseContent {

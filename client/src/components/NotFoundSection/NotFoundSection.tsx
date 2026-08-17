@@ -1,5 +1,6 @@
 import { RiArrowLeftLine, RiHome4Line } from '@remixicon/react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Container } from '../layout/Container/Container'
 import styles from './NotFoundSection.module.css'
 
 const notFoundHeadingId = 'not-found-heading'
@@ -13,7 +14,7 @@ export function NotFoundSection() {
       aria-labelledby={notFoundHeadingId}
       className={styles.section}
     >
-      <div className={`${styles.content} page-container`}>
+      <Container className={styles.content}>
         <p className={styles.eyebrow}>
           <span aria-hidden="true" className={styles.statusDot} />
           Page not found
@@ -42,7 +43,7 @@ export function NotFoundSection() {
             Go back
           </button>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

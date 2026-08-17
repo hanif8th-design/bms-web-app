@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Container } from '../layout/Container/Container'
 import { PublicNavbarActions } from './components/PublicNavbarActions/PublicNavbarActions'
 import { PublicNavbarBrand } from './components/PublicNavbarBrand/PublicNavbarBrand'
 import { PublicNavbarMenuToggle } from './components/PublicNavbarMenuToggle/PublicNavbarMenuToggle'
@@ -76,7 +77,7 @@ export function PublicNavbar() {
 
   return (
     <header className={styles.publicNavbar} ref={navbarRef}>
-      <div className={styles.navbarInner}>
+      <Container className={styles.navbarInner}>
         <PublicNavbarBrand onNavigate={() => closeMobileMenu()} />
         <PublicNavbarNavigation presentation="desktop" />
         <PublicNavbarActions presentation="desktop" />
@@ -86,7 +87,7 @@ export function PublicNavbar() {
           onToggle={() => setIsMobileMenuOpen((currentIsOpen) => !currentIsOpen)}
           toggleRef={menuToggleRef}
         />
-      </div>
+      </Container>
       <PublicNavbarMobileMenu
         id={mobileMenuId}
         isFeaturesOpen={isMobileFeaturesOpen}
