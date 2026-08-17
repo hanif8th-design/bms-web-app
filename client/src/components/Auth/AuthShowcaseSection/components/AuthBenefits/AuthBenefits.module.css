@@ -8,7 +8,7 @@
   list-style: none;
 }
 
-@media (width < 540px) {
+@media (width < 960px) {
   .benefitList {
     grid-template-columns: minmax(0, 1fr);
   }

@@ -6,9 +6,15 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding-block: var(--spacing-lg);
+  padding-block: var(--spacing-xl);
   border-right: var(--border-width-default) solid var(--color-divider);
-  background-color: var(--color-surface-container-lowest);
+  background:
+    radial-gradient(
+      circle at 4% 4%,
+      color-mix(in srgb, var(--color-primary-container) 26%, transparent),
+      transparent 28%
+    ),
+    var(--color-surface-container-lowest);
   scrollbar-color: var(--color-outline-variant) transparent;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
@@ -23,29 +29,35 @@
 
 .formContent {
   width: 100%;
-  max-width: 424px;
+  max-width: 448px;
   margin-block: auto;
 }
 
-@media (width < 880px) {
+@media (width < 760px) {
   .formSection {
     height: auto;
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
     overflow-y: visible;
     overscroll-behavior: auto;
-    padding-block: var(--spacing-3xl);
+    padding-block: var(--spacing-2xl);
     border-right: 0;
     border-bottom: var(--border-width-default) solid var(--color-divider);
     scrollbar-gutter: auto;
   }
 
-  .formContent {
-    margin-block: 0;
+  .formContainer {
+    height: auto;
+    min-height: calc(100svh - var(--spacing-4xl));
   }
 }
 
 @media (width < 480px) {
   .formSection {
     padding-block: var(--spacing-xl);
+  }
+
+  .formContainer {
+    min-height: calc(100svh - var(--spacing-3xl));
   }
 }

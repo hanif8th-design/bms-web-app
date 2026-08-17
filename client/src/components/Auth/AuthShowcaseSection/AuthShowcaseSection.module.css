@@ -1,39 +1,65 @@
-/* Defines the shared pinned showcase pane used by authentication pages. */
 .showcaseSection {
   position: relative;
+  isolation: isolate;
   display: flex;
   height: 100%;
   min-width: 0;
   min-height: 0;
   align-items: center;
   overflow: hidden;
-  padding-block: var(--spacing-lg);
+  padding-block: var(--spacing-xl);
   background:
     radial-gradient(
-      circle at 90% 8%,
-      var(--color-primary-container),
+      circle at 88% 10%,
+      color-mix(in srgb, var(--color-primary-container) 82%, transparent),
       transparent 34%
+    ),
+    radial-gradient(
+      circle at 12% 88%,
+      color-mix(in srgb, var(--color-secondary-container) 52%, transparent),
+      transparent 30%
     ),
     linear-gradient(
       145deg,
-      var(--color-surface-container-low),
-      var(--color-surface-container)
+      var(--color-surface-container-lowest),
+      color-mix(
+        in srgb,
+        var(--color-surface-container-low) 80%,
+        var(--color-primary-container)
+      )
     );
-  isolation: isolate;
 }
 
 .showcaseSection::before {
   position: absolute;
   z-index: -1;
-  right: -20%;
-  bottom: -18%;
-  width: 68%;
-  aspect-ratio: 1;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary-container);
+  inset: 0;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--color-primary) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-primary) 5%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
   content: '';
-  filter: blur(72px);
-  opacity: 0.48;
+  mask-image: linear-gradient(135deg, transparent 8%, black 52%, transparent);
+}
+
+.showcaseSection::after {
+  position: absolute;
+  z-index: -1;
+  top: 12%;
+  right: -18%;
+  width: 50%;
+  aspect-ratio: 1;
+  border: 48px solid
+    color-mix(in srgb, var(--color-primary-container) 48%, transparent);
+  border-radius: var(--radius-full);
+  content: '';
 }
 
 .showcaseContainer {
@@ -46,34 +72,246 @@
 .showcaseContent {
   display: grid;
   width: 100%;
-  max-width: 500px;
+  max-width: 580px;
   gap: var(--spacing-xl);
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.logo {
+  width: 132px;
+}
+
+.brandDivider {
+  width: 1px;
+  height: 28px;
+  background-color: var(--color-outline-variant);
+}
+
+.brandTagline {
+  color: var(--color-on-surface-muted);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-label);
+  line-height: var(--line-height-label-md);
+}
+
+.showcaseHeader {
+  max-width: 540px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-sm);
+  color: var(--color-primary);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  line-height: var(--line-height-label-md);
+  text-transform: uppercase;
+}
+
+.eyebrowMark {
+  width: 18px;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+}
+
+.heading {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: clamp(var(--font-size-headline-lg), 3vw, var(--font-size-display-md));
+  letter-spacing: var(--letter-spacing-display);
+  line-height: var(--line-height-display-md);
+}
+
+.description {
+  max-width: 500px;
+  margin: var(--spacing-sm) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  text-wrap: pretty;
+}
+
+.closingNote {
+  display: flex;
+  max-width: 440px;
+  align-items: center;
+  gap: 12px;
+  padding-top: var(--spacing-lg);
+  border-top: var(--border-width-default) solid var(--color-outline-variant);
+}
+
+.checkIcon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+  color: var(--color-primary);
+  place-items: center;
+}
+
+.closingNote p {
+  display: grid;
+  margin: 0;
+  gap: 1px;
+}
+
+.closingNote strong {
+  color: var(--color-on-surface);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+}
+
+.closingNote p span {
+  color: var(--color-on-surface-muted);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
 }
 
 @media (width < 1024px) {
   .showcaseContent {
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
+  }
+
+  .brand {
+    gap: var(--spacing-sm);
+  }
+
+  .logo {
+    width: 116px;
+  }
+
+  .description {
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body-sm);
+  }
+
+  .closingNote {
+    padding-top: var(--spacing-md);
   }
 }
 
-@media (height < 650px) and (width >= 880px) {
+@media (width >= 760px) and (width < 900px) {
+  .showcaseContent {
+    gap: 20px;
+  }
+
+  .brandDivider,
+  .brandTagline,
+  .closingNote {
+    display: none;
+  }
+
+  .logo {
+    width: 108px;
+  }
+
+  .heading {
+    font-size: var(--font-size-headline-md);
+    line-height: var(--line-height-headline-md);
+  }
+}
+
+@media (height < 700px) and (width >= 760px) {
   .showcaseSection {
     padding-block: var(--spacing-md);
   }
 
   .showcaseContent {
-    max-width: 450px;
+    max-width: 540px;
     gap: var(--spacing-md);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .description {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body-sm);
+  }
+
+  .closingNote {
+    padding-top: var(--spacing-md);
   }
 }
 
-@media (width < 880px) {
+@media (width < 760px) {
   .showcaseSection {
     height: auto;
-    padding-block: var(--spacing-2xl);
+    padding-block: var(--spacing-xl);
   }
 
   .showcaseContent {
-    max-width: 560px;
+    max-width: 520px;
+    gap: 20px;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .logo {
+    width: 108px;
+  }
+
+  .brandDivider,
+  .brandTagline,
+  .closingNote {
+    display: none;
+  }
+
+  .showcaseHeader {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .description {
+    margin-inline: auto;
+  }
+
+  .showcaseSection::before {
+    background-size: 40px 40px;
+    opacity: 0.7;
+  }
+
+  .showcaseSection::after {
+    display: none;
+  }
+}
+
+@media (width < 540px) {
+  .showcaseContent {
+    gap: var(--spacing-md);
+  }
+
+  .eyebrow {
+    display: none;
+  }
+
+  .heading {
+    font-size: var(--font-size-headline-lg);
+    line-height: var(--line-height-headline-lg);
+  }
+
+  .description {
+    max-width: 380px;
   }
 }

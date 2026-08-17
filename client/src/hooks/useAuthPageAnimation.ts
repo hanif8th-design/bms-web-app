@@ -3,8 +3,7 @@ import type { RefObject } from 'react'
 import { gsap, useGSAP } from '../lib/gsap'
 
 const formItemSelector = '[data-auth-animation-item]'
-const illustrationSelector = '[data-auth-animation-illustration]'
-const benefitSelector = '[data-auth-animation-benefit]'
+const showcaseItemSelector = '[data-auth-animation-showcase-item]'
 
 export function useAuthPageAnimation(
   pageRef: RefObject<HTMLElement | null>,
@@ -26,11 +25,8 @@ export function useAuthPageAnimation(
             formItemSelector,
             pageElement,
           )
-          const illustration = pageElement.querySelector<HTMLElement>(
-            illustrationSelector,
-          )
-          const benefits = gsap.utils.toArray<HTMLElement>(
-            benefitSelector,
+          const showcaseItems = gsap.utils.toArray<HTMLElement>(
+            showcaseItemSelector,
             pageElement,
           )
 
@@ -50,28 +46,8 @@ export function useAuthPageAnimation(
             },
           )
 
-          if (illustration) {
-            timeline.fromTo(
-              illustration,
-              {
-                autoAlpha: 0,
-                scale: 0.985,
-                willChange: 'transform,opacity',
-                y: 8,
-              },
-              {
-                autoAlpha: 1,
-                clearProps: 'opacity,visibility,transform,willChange',
-                duration: 0.52,
-                scale: 1,
-                y: 0,
-              },
-              0.08,
-            )
-          }
-
           timeline.fromTo(
-            benefits,
+            showcaseItems,
             { autoAlpha: 0, willChange: 'transform,opacity', y: 10 },
             {
               autoAlpha: 1,

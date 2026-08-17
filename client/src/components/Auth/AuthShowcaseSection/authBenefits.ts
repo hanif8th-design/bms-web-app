@@ -14,15 +14,15 @@ export interface AuthBenefit {
 
 export const authBenefits: AuthBenefit[] = [
   {
-    description: 'Bank-grade encryption for your data.',
+    description: 'Protected access keeps important business data secure.',
     icon: RiShieldCheckLine,
     id: 'enterprise-security',
-    title: 'Enterprise Security',
+    title: 'Secure by design',
   },
   {
-    description: 'Optimized for speed and reliability.',
+    description: 'Fast, dependable workflows keep every team moving.',
     icon: RiSpeedLine,
     id: 'lightning-fast',
-    title: 'Lightning Fast',
+    title: 'Built for momentum',
   },
 ]

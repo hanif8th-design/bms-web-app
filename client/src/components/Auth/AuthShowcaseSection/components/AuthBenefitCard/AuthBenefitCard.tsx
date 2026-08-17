@@ -10,7 +10,7 @@ export function AuthBenefitCard({ benefit }: AuthBenefitCardProps) {
   const BenefitIcon = benefit.icon
 
   return (
-    <li className={styles.card} data-auth-animation-benefit>
+    <li className={styles.card} data-auth-animation-showcase-item>
       <div className={styles.iconContainer} aria-hidden="true">
         <BenefitIcon size={20} />
       </div>

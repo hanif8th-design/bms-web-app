@@ -1,59 +1,87 @@
-/* Styles shared benefit cards with restrained elevation and icon emphasis. */
 .card {
+  display: grid;
   min-width: 0;
-  min-height: 166px;
-  padding: var(--spacing-lg);
-  border: var(--border-width-default) solid var(--color-divider);
+  min-height: 104px;
+  align-content: center;
+  padding: var(--spacing-md);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 10%, var(--color-divider));
   border-radius: var(--radius-lg);
-  background-color: var(--color-surface-container-lowest);
-  box-shadow: var(--shadow-medium);
+  background-color: color-mix(
+    in srgb,
+    var(--color-surface-container-lowest) 92%,
+    var(--color-primary-container)
+  );
+  box-shadow: var(--shadow-low);
+  column-gap: 12px;
+  grid-template-areas:
+    'icon title'
+    'icon description';
+  grid-template-columns: 40px minmax(0, 1fr);
 }
 
 .iconContainer {
   display: grid;
   width: 40px;
   height: 40px;
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-full);
+  align-self: center;
+  border-radius: var(--radius-md);
   background-color: var(--color-primary-container);
   color: var(--color-primary);
+  grid-area: icon;
   place-items: center;
 }
 
 .card:nth-child(2) .iconContainer {
-  background-color: var(--color-surface-container);
-  color: var(--color-on-surface-variant);
+  background-color: var(--color-secondary-container);
+  color: var(--color-secondary);
 }
 
 .title {
+  align-self: end;
   margin: 0;
-  font-size: var(--font-size-body-lg);
+  color: var(--color-on-surface);
+  font-size: var(--font-size-body-md);
   letter-spacing: var(--letter-spacing-title);
   line-height: var(--line-height-title-md);
+  grid-area: title;
 }
 
 .description {
-  margin: var(--spacing-xs) 0 0;
+  align-self: start;
+  margin: 2px 0 0;
   color: var(--color-on-surface-variant);
-  font-size: var(--font-size-body-sm);
-  line-height: var(--line-height-body-sm);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+  grid-area: description;
 }
 
-@media (width < 540px) {
+@media (width < 960px) {
   .card {
-    min-height: 0;
-  }
-}
-
-@media (height < 650px) and (width >= 880px) {
-  .card {
-    min-height: 0;
-    padding: var(--spacing-md);
+    min-height: 88px;
+    padding: 14px;
+    grid-template-columns: 36px minmax(0, 1fr);
   }
 
   .iconContainer {
     width: 36px;
     height: 36px;
-    margin-bottom: var(--spacing-sm);
+  }
+}
+
+@media (height < 760px) and (width >= 760px) {
+  .card {
+    min-height: 76px;
+    padding: 12px;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .iconContainer {
+    width: 36px;
+    height: 36px;
+  }
+
+  .description {
+    display: none;
   }
 }
