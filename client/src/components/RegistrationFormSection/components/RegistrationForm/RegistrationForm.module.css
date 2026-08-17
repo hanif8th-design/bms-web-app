@@ -16,51 +16,6 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.submissionFeedback {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-sm);
-  padding: 10px 12px;
-  border: var(--border-width-default) solid transparent;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-body-sm);
-}
-
-.submissionFeedback svg {
-  flex: 0 0 auto;
-  margin-top: 1px;
-}
-
-.successFeedback {
-  border-color: color-mix(
-    in srgb,
-    var(--color-success) 28%,
-    var(--color-success-container)
-  );
-  background-color: var(--color-success-container);
-  color: var(--color-on-success-container);
-}
-
-.successFeedback svg {
-  color: var(--color-success);
-}
-
-.errorFeedback {
-  border-color: color-mix(
-    in srgb,
-    var(--color-error) 28%,
-    var(--color-error-container)
-  );
-  background-color: var(--color-error-container);
-  color: var(--color-on-error-container);
-}
-
-.errorFeedback svg {
-  color: var(--color-error);
-}
-
 @media (width < 420px) {
   .nameFields {
     grid-template-columns: minmax(0, 1fr);

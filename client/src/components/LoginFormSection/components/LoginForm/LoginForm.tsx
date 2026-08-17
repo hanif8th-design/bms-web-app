@@ -3,8 +3,10 @@ import { useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthAccountPrompt } from '../../../Auth/AuthAccountPrompt/AuthAccountPrompt'
 import { AuthFormField } from '../../../Auth/AuthFormField/AuthFormField'
+import { AuthFormFeedback } from '../../../Auth/AuthFormFeedback/AuthFormFeedback'
 import { AuthPasswordField } from '../../../Auth/AuthPasswordField/AuthPasswordField'
 import { AuthSubmitButton } from '../../../Auth/AuthSubmitButton/AuthSubmitButton'
+import { AccountsApiError, loginAccount } from '../../../../api/accounts'
 import type {
   LoginFormErrors,
   LoginFormFieldName,
@@ -18,6 +20,51 @@ const initialValues: LoginFormValues = {
 }
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+interface SubmissionFeedback {
+  message: string
+  tone: 'error' | 'success'
+}
+
+const apiFieldMap: Partial<Record<string, LoginFormFieldName>> = {
+  email: 'email',
+  password: 'password',
+}
+
+function readApiErrorMessage(value: unknown): string | undefined {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const message = readApiErrorMessage(item)
+      if (message) {
+        return message
+      }
+    }
+  }
+
+  return undefined
+}
+
+function mapApiFieldErrors(details: unknown): LoginFormErrors {
+  const fieldErrors: LoginFormErrors = {}
+
+  if (!details || typeof details !== 'object' || Array.isArray(details)) {
+    return fieldErrors
+  }
+
+  for (const [apiFieldName, value] of Object.entries(details)) {
+    const formFieldName = apiFieldMap[apiFieldName]
+    const message = readApiErrorMessage(value)
+    if (formFieldName && message) {
+      fieldErrors[formFieldName] = message
+    }
+  }
+
+  return fieldErrors
+}
 
 function validateLoginForm(values: LoginFormValues): LoginFormErrors {
   const errors: LoginFormErrors = {}
@@ -42,13 +89,18 @@ export function LoginForm() {
     Partial<Record<LoginFormFieldName, boolean>>
   >({})
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [serverErrors, setServerErrors] = useState<LoginFormErrors>({})
+  const [submissionFeedback, setSubmissionFeedback] =
+    useState<SubmissionFeedback | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const validationErrors = validateLoginForm(values)
 
   const visibleError = (fieldName: LoginFormFieldName) =>
-    touchedFields[fieldName] || hasSubmitted
+    serverErrors[fieldName] ??
+    (touchedFields[fieldName] || hasSubmitted
       ? validationErrors[fieldName]
-      : undefined
+      : undefined)
 
   const markFieldTouched = (fieldName: LoginFormFieldName) => {
     setTouchedFields((currentFields) => ({
@@ -65,22 +117,94 @@ export function LoginForm() {
       ...currentValues,
       [fieldName]: value,
     }))
+
+    setServerErrors((currentErrors) => {
+      if (!currentErrors[fieldName]) {
+        return currentErrors
+      }
+
+      const nextErrors = { ...currentErrors }
+      delete nextErrors[fieldName]
+      return nextErrors
+    })
+    setSubmissionFeedback(null)
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setHasSubmitted(true)
+  const focusFirstInvalidField = () => {
+    requestAnimationFrame(() => {
+      formRef.current
+        ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+        ?.focus()
+    })
+  }
 
-    if (Object.values(validationErrors).some(Boolean)) {
-      requestAnimationFrame(() => {
-        formRef.current
-          ?.querySelector<HTMLElement>('[aria-invalid="true"]')
-          ?.focus()
-      })
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (isSubmitting) {
       return
     }
 
-    // Future Django integration boundary: authenticate `values` here.
+    setHasSubmitted(true)
+    setServerErrors({})
+    setSubmissionFeedback(null)
+
+    if (Object.values(validationErrors).some(Boolean)) {
+      focusFirstInvalidField()
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await loginAccount({
+        email: values.email.trim().toLowerCase(),
+        password: values.password,
+      })
+
+      setValues((currentValues) => ({
+        ...currentValues,
+        password: '',
+      }))
+      setTouchedFields({})
+      setHasSubmitted(false)
+      setSubmissionFeedback({
+        message: response.user.first_name
+          ? `Welcome back, ${response.user.first_name}. Sign-in was successful.`
+          : 'Sign-in was successful.',
+        tone: 'success',
+      })
+    } catch (error) {
+      if (error instanceof AccountsApiError) {
+        const fieldErrors = mapApiFieldErrors(error.details)
+        const hasFieldErrors = Object.keys(fieldErrors).length > 0
+
+        setServerErrors(fieldErrors)
+        setSubmissionFeedback({
+          message:
+            error.status === 401
+              ? 'Email or password is incorrect.'
+              : error.status === 429
+                ? 'Too many sign-in attempts. Please try again later.'
+                : hasFieldErrors
+                  ? 'Please review the highlighted fields and try again.'
+                  : 'Sign-in could not be completed. Please try again.',
+          tone: 'error',
+        })
+
+        if (hasFieldErrors) {
+          focusFirstInvalidField()
+        }
+      } else {
+        setSubmissionFeedback({
+          message:
+            'Unable to reach the sign-in service. Check your connection and try again.',
+          tone: 'error',
+        })
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -121,7 +245,17 @@ export function LoginForm() {
           </Link>
         </div>
       </div>
-      <AuthSubmitButton label="Sign In to Dashboard" />
+      {submissionFeedback ? (
+        <AuthFormFeedback
+          message={submissionFeedback.message}
+          tone={submissionFeedback.tone}
+        />
+      ) : null}
+      <AuthSubmitButton
+        isPending={isSubmitting}
+        label="Sign In to Dashboard"
+        pendingLabel="Signing in..."
+      />
       <AuthAccountPrompt
         linkLabel="Create account"
         prompt="Don't have an account?"

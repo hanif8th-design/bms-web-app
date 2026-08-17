@@ -1,8 +1,8 @@
 // Owns typed registration state and exposes a clean future API integration boundary.
-import { RiCheckboxCircleLine, RiErrorWarningLine } from '@remixicon/react'
 import { useRef, useState, type FormEvent } from 'react'
 import { AuthAccountPrompt } from '../../../Auth/AuthAccountPrompt/AuthAccountPrompt'
 import { AuthFormField } from '../../../Auth/AuthFormField/AuthFormField'
+import { AuthFormFeedback } from '../../../Auth/AuthFormFeedback/AuthFormFeedback'
 import { AuthPasswordField } from '../../../Auth/AuthPasswordField/AuthPasswordField'
 import { AuthSubmitButton } from '../../../Auth/AuthSubmitButton/AuthSubmitButton'
 import {
@@ -339,22 +339,10 @@ export function RegistrationForm() {
         onChange={(event) => updateValue('agreeToTerms', event.target.checked)}
       />
       {submissionFeedback ? (
-        <div
-          aria-live="polite"
-          className={`${styles.submissionFeedback} ${
-            submissionFeedback.tone === 'success'
-              ? styles.successFeedback
-              : styles.errorFeedback
-          }`}
-          role={submissionFeedback.tone === 'error' ? 'alert' : 'status'}
-        >
-          {submissionFeedback.tone === 'success' ? (
-            <RiCheckboxCircleLine aria-hidden="true" size={18} />
-          ) : (
-            <RiErrorWarningLine aria-hidden="true" size={18} />
-          )}
-          <span>{submissionFeedback.message}</span>
-        </div>
+        <AuthFormFeedback
+          message={submissionFeedback.message}
+          tone={submissionFeedback.tone}
+        />
       ) : null}
       <AuthSubmitButton
         isPending={isSubmitting}
