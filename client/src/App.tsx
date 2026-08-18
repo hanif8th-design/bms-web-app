@@ -5,6 +5,7 @@ import { HomePage } from './pages/HomePage/HomePage'
 import { LoginPage } from './pages/LoginPage/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 import { RegisterPage } from './pages/RegisterPage/RegisterPage'
+import { ResetPasswordPage } from './pages/ResetPasswordPage/ResetPasswordPage'
 
 function PublicPageLayout() {
   return (
@@ -27,6 +28,11 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/reset-password/:uid/:token"
+        element={<ResetPasswordPage />}
+      />
+      <Route path="/reset-password/*" element={<ResetPasswordPage />} />
     </Routes>
   )
 }
