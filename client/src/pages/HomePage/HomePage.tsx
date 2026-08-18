@@ -1,4 +1,5 @@
 import { HeroSection } from '../../components/HeroSection/HeroSection'
+import { ProblemSection } from '../../components/ProblemSection/ProblemSection'
 import { TrustSection } from '../../components/TrustSection/TrustSection'
 
 export function HomePage() {
@@ -6,6 +7,7 @@ export function HomePage() {
     <main>
       <HeroSection />
       <TrustSection />
+      <ProblemSection />
     </main>
   )
 }

@@ -1,0 +1,372 @@
+.problemSection {
+  width: 100%;
+  border-bottom: var(--border-width-default) solid var(--color-divider);
+  background-color: color-mix(
+    in srgb,
+    var(--color-surface) 88%,
+    var(--color-primary-container)
+  );
+}
+
+.layout {
+  display: grid;
+  align-items: center;
+  padding-block: clamp(var(--spacing-2xl), 6vw, 80px);
+  gap: clamp(var(--spacing-2xl), 6vw, 80px);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.copy {
+  min-width: 0;
+  max-width: 540px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 var(--spacing-md);
+  padding: 7px 11px;
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-warning) 28%, var(--color-divider));
+  border-radius: var(--radius-full);
+  gap: var(--spacing-sm);
+  background-color: color-mix(
+    in srgb,
+    var(--color-warning-container) 52%,
+    var(--color-surface-container-lowest)
+  );
+  color: var(--color-warning);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  line-height: var(--line-height-label-md);
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  content: '';
+}
+
+.heading {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(
+    var(--font-size-headline-lg),
+    3.2vw,
+    var(--font-size-display-md)
+  );
+  letter-spacing: var(--letter-spacing-display);
+  line-height: 1.12;
+}
+
+.description {
+  max-width: 55ch;
+  margin: var(--spacing-lg) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg);
+  text-wrap: pretty;
+}
+
+.painList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--spacing-xl) 0 0;
+  padding: 0;
+  gap: 10px;
+  list-style: none;
+}
+
+.painItem {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 8px 12px;
+  border: var(--border-width-default) solid var(--color-divider);
+  border-radius: var(--radius-full);
+  gap: 9px;
+  background-color: color-mix(
+    in srgb,
+    var(--color-surface-container-lowest) 86%,
+    transparent
+  );
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-label-md);
+}
+
+.painItem::before {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-full);
+  background-color: var(--color-warning);
+  box-shadow: 0 0 0 3px var(--color-warning-container);
+  content: '';
+}
+
+.fragmentedVisual {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: clamp(var(--spacing-lg), 3vw, 36px);
+  overflow: hidden;
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 14%, var(--color-divider));
+  border-radius: calc(var(--radius-xl) + 8px);
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-container) 24%,
+    var(--color-surface-container-lowest)
+  );
+  box-shadow: 0 24px 56px -24px rgb(25 28 30 / 28%);
+}
+
+.fragmentedVisual::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-primary) 18%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+  content: '';
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.visualHeader {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.visualEyebrow {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  line-height: var(--line-height-label-sm);
+  text-transform: uppercase;
+}
+
+.visualLabel {
+  margin: 5px 0 0;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-title-md);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-title-md);
+}
+
+.visualMeta {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  margin: 0;
+  padding: 5px 10px;
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-warning) 28%, var(--color-divider));
+  border-radius: var(--radius-full);
+  background-color: color-mix(
+    in srgb,
+    var(--color-warning-container) 64%,
+    var(--color-surface-container-lowest)
+  );
+  color: var(--color-warning);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-label-sm);
+  white-space: nowrap;
+}
+
+.cardGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  margin: var(--spacing-xl) 0 0;
+  padding: 0;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  list-style: none;
+}
+
+.problemCard {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  min-height: 98px;
+  align-items: center;
+  padding: var(--spacing-md) 42px var(--spacing-md) var(--spacing-md);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 12%, var(--color-divider));
+  border-radius: var(--radius-xl);
+  background-color: color-mix(
+    in srgb,
+    var(--color-surface-container-lowest) 94%,
+    transparent
+  );
+  box-shadow: 0 8px 22px -14px rgb(25 28 30 / 30%);
+  gap: 14px;
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.iconContainer {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-warning) 24%, var(--color-divider));
+  border-radius: var(--radius-lg);
+  background-color: color-mix(
+    in srgb,
+    var(--color-warning-container) 54%,
+    var(--color-surface-container-lowest)
+  );
+  color: var(--color-warning);
+  place-items: center;
+}
+
+.cardCopy {
+  min-width: 0;
+}
+
+.cardIndex {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: color-mix(
+    in srgb,
+    var(--color-primary) 42%,
+    var(--color-on-surface-muted)
+  );
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  line-height: var(--line-height-label-sm);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+}
+
+.cardDescription {
+  margin: 4px 0 0;
+  color: var(--color-on-surface-muted);
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+}
+
+.visualSummary {
+  position: relative;
+  z-index: 1;
+  margin: var(--spacing-lg) 0 0;
+  padding: 11px var(--spacing-md);
+  border: var(--border-width-default) solid
+    color-mix(in srgb, var(--color-primary) 15%, var(--color-divider));
+  border-radius: var(--radius-lg);
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-container) 46%,
+    var(--color-surface-container-lowest)
+  );
+  color: var(--color-on-primary-container);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-sm);
+  text-align: center;
+}
+
+@media (width < 1080px) {
+  .layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .problemCard {
+    padding: 14px;
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  .iconContainer {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (width < 940px) {
+  .layout {
+    justify-items: center;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .copy {
+    max-width: 680px;
+    justify-self: center;
+  }
+
+  .heading {
+    max-width: 18ch;
+  }
+
+  .fragmentedVisual {
+    width: 100%;
+    max-width: 760px;
+  }
+}
+
+@media (width < 560px) {
+  .layout {
+    padding-block: var(--spacing-3xl);
+    gap: var(--spacing-xl);
+  }
+
+  .description {
+    font-size: var(--font-size-body-md);
+    line-height: var(--line-height-body-md);
+  }
+
+  .fragmentedVisual {
+    padding: var(--spacing-md);
+  }
+
+  .visualHeader {
+    display: grid;
+    gap: 6px;
+  }
+
+  .visualMeta {
+    justify-self: start;
+  }
+
+  .cardGrid {
+    margin-top: var(--spacing-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .problemCard {
+    min-height: 88px;
+  }
+}
+
+@media (width < 380px) {
+  .problemCard {
+    padding: 12px;
+  }
+}
