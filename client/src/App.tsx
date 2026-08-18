@@ -1,5 +1,6 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
 import { PublicNavbar } from './components/PublicNavbar/PublicNavbar'
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage/ForgotPasswordPage'
 import { HomePage } from './pages/HomePage/HomePage'
 import { LoginPage } from './pages/LoginPage/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
@@ -23,6 +24,7 @@ function App() {
       </Route>
 
       {/* Authentication and future logged-in routes stay outside the public layout. */}
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
     </Routes>
