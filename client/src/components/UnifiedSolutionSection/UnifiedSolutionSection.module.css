@@ -6,10 +6,10 @@
 
 .layout {
   display: grid;
-  align-items: center;
-  padding-block: clamp(var(--spacing-3xl), 7vw, var(--spacing-4xl));
+  align-items: start;
+  padding-block: clamp(var(--spacing-3xl), 6vw, 80px);
   gap: clamp(var(--spacing-2xl), 6vw, 80px);
-  grid-template-columns: minmax(0, 0.88fr) minmax(560px, 1.12fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
 .copy {
@@ -293,12 +293,12 @@
 
 .branchesModule {
   bottom: 3%;
-  left: 20%;
+  left: 33%;
   transform: translateX(-50%);
 }
 
 .reportsModule {
-  right: 20%;
+  right: 33%;
   bottom: 3%;
   transform: translateX(50%);
 }
@@ -317,7 +317,6 @@
 @media (width < 1120px) {
   .layout {
     gap: var(--spacing-2xl);
-    grid-template-columns: minmax(0, 0.86fr) minmax(520px, 1.14fr);
   }
 
   .moduleCard {
@@ -325,13 +324,14 @@
   }
 }
 
-@media (width < 960px) {
+@media (width < 1020px) {
   .layout {
     justify-items: center;
     grid-template-columns: minmax(0, 1fr);
   }
 
   .copy {
+    width: 100%;
     max-width: 680px;
   }
 
